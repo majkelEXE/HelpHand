@@ -50,7 +50,26 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-class Fundraisers(models.Model):
-    title = models.CharField(max_length = 20)
-    short_description = models.CharField(max_length = 200)
-    short_description = models.TextField()
+class Fundraiser(models.Model):
+    name = models.CharField(max_length = 50)
+    description = models.CharField(max_length = 250)
+    location = models.CharField(max_length = 100)
+    date = models.DateField()
+    content = models.TextField()
+    contact_email = models.EmailField()   
+    contact_phone = PhoneNumberField(null=False, blank=False, unique=True, region="PL")
+
+class VolunteerAdvert(models.Model):
+    fundraiser = models.ForeignKey("Fundraiser", on_delete=models.CASCADE, related_name='VolunteerAdvert', blank=True, null=True)
+    role = models.CharField(max_length = 80)
+    description = models.CharField(max_length = 250)
+    content = models.TextField()
+    image = models.ImageField(upload_to="volunteer_photos", blank=True)
+    contact_email = models.EmailField()   
+    contact_phone = PhoneNumberField(null=False, blank=False, unique=True, region="PL")
+
+#class that will be prepared for storing multiple photos
+class VolunteerPhoto(models.Model):
+    volunteer_advert = models.ForeignKey("VolunteerAdvert", on_delete=models.CASCADE, related_name='VolunteerPhoto', blank=False, null=False)
+    img_description = models.CharField(max_length = 100)
+    image = models.ImageField()

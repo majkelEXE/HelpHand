@@ -1,6 +1,7 @@
+from pyexpat import model
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
-from helphand.models import User, Fundraisers
+from helphand.models import User, Fundraiser, VolunteerAdvert
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,5 +15,12 @@ class UserSerializer(serializers.ModelSerializer):
         # user.save()
         # Token.objects.create(user=user)
         return user
+
+class VolunteerAdvertSerializer(serializers.ModelSerializer):
+    # volunteer_photos = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = VolunteerAdvert
+        fields = "__all__"
 
     

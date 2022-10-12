@@ -1,7 +1,7 @@
 API DOCS 
 ------------------------------------------------------------
 /api/users
-==>POST
+==>POST(use to register)
 request:
 {
   "email":"test@test.pl",
@@ -20,7 +20,7 @@ response:
 ------------------------------------------------------------
 
 /api/auth
-==>POST
+==>POST(use to log in)
 request
 {
   "email":"md@md.pl",
@@ -33,7 +33,7 @@ response
     "email": "md@md.pl"
 }
 
-==>GET
+==>GET(use to take credentials using the token)
 request(you have to set headers to "Authorization:token cd11ceb2f67e2d518794d5586011d9fad86d96b8") - 
 e.g. with httpie
 http GET http://127.0.0.1:8000/api/auth "Authorization:token cd11ceb2f67e2d518794d5586011d9fad86d96b8"
@@ -48,3 +48,53 @@ response
     "phone_number": "+48123456739"
 }
 ------------------------------------------------------------
+/api/auth
+==>POST(allow to create volunteer)
+request
+
+request e.g. with httpie
+http -f POST http://127.0.0.1:8000/api/volunteer image@'test.jpg' role='testowa' content='aaa' contact_email='test@test.pl' contact_phone="+48123456739" description='niewiem'
+++++++
+(you have to use new FormData() to correctly add metadata and image, example: https://dev.to/thomz/uploading-images-to-django-rest-framework-from-forms-in-react-3jhj)
+++++++
+
+response:
+{
+    "contact_email": "test@test.pl",
+    "contact_phone": "+48123456739",
+    "content": "aaa",
+    "description": "niewiem",
+    "fundraiser": null,
+    "id": 1,
+    "image": "/media/volunteer_photos/test.jpg",
+    "role": "testowa"
+}
+use the image url and add it to the address: http://localhost:8000/api + '/media/volunteer_photos/test.jpg'
+then you can use src as the link.
+
+
+==>GET(get all volunteers)
+response:
+[
+    {
+        "id": 1,
+        "role": "testowa",
+        "description": "niewiem",
+        "content": "aaa",
+        "image": "/media/volunteer_photos/test.jpg",
+        "contact_email": "test@test.pl",
+        "contact_phone": "+48123456739",
+        "fundraiser": null
+    },
+    {
+        "id": 2,
+        "role": "testow2a",
+        "description": "niewiem2",
+        "content": "a2aa",
+        "image": "/media/volunteer_photos/test_lciHn3d.jpg",
+        "contact_email": "test2@test.pl",
+        "contact_phone": "+48123456339",
+        "fundraiser": null
+    }
+]
+
