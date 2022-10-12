@@ -5,10 +5,12 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
-from .serializers import UserSerializer
-from .models import User
+
+from .serializers import UserSerializer, VolunteerAdvertSerializer
+from .models import User, VolunteerAdvert
 
 # Create your views here.
 class UserView(APIView):
@@ -62,3 +64,26 @@ class GetAuthUserView(APIView):
             'token': token.key,
             'email': user.email,
             }, status=status.HTTP_200_OK)
+
+
+class VolunteerAdvertView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request):
+        print("wchodzi")
+        print(request.data)
+        print("jest dalej")
+        serializer = VolunteerAdvertSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print("w bledzie od razu")
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        volunteer_adverts = VolunteerAdvert.objects.all()
+        volunteer_adverts_data = VolunteerAdvertSerializer(volunteer_adverts, many=True).data
+        return Response(volunteer_adverts_data, status=status.HTTP_200_OK)
+        
