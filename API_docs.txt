@@ -1,0 +1,50 @@
+API DOCS 
+------------------------------------------------------------
+/api/users
+==>POST
+request:
+{
+  "email":"test@test.pl",
+  "first_name":"michal", 
+  "last_name": "ferd",
+  "date_of_birth" : "2019-04-04",
+  "phone_number" : "+48123456789",
+  "password" : "test"
+}
+response:
+{
+    "token": "99ef0c0628d6a7deabb29e2dfd509f958fcd748b",
+    "email": "muuu@test.pl"
+}
+
+------------------------------------------------------------
+
+/api/auth
+==>POST
+request
+{
+  "email":"md@md.pl",
+  "password" : "md"
+}
+
+response
+{
+    "token": "cd11ceb2f67e2d518794d5586011d9fad86d96b8",
+    "email": "md@md.pl"
+}
+
+==>GET
+request(you have to set headers to "Authorization:token cd11ceb2f67e2d518794d5586011d9fad86d96b8") - 
+e.g. with httpie
+http GET http://127.0.0.1:8000/api/auth "Authorization:token cd11ceb2f67e2d518794d5586011d9fad86d96b8"
+
+response
+{
+    "date_of_birth": "2019-04-04",
+    "email": "md@md.pl",
+    "first_name": "michal",
+    "id": 12,
+    "last_name": "ferd",
+    "phone_number": "+48123456739"
+}
+------------------------------------------------------------
