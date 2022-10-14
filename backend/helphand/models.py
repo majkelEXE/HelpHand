@@ -1,3 +1,4 @@
+from email.policy import default
 from enum import unique
 from pyexpat import model
 from django.db import models
@@ -50,26 +51,36 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
+class Location(models.Model):
+    name = models.CharField(max_length = 120)
+    latitude = models.TextField()
+    longtitude = models.TextField()
+
 class Fundraiser(models.Model):
+    created_by = models.IntegerField(null=False, blank=False, default=-1)
     name = models.CharField(max_length = 50)
     description = models.CharField(max_length = 250)
-    location = models.CharField(max_length = 100)
+    location = models.OneToOneField(Location, on_delete=models.CASCADE)
     date = models.DateField()
     content = models.TextField()
-    contact_email = models.EmailField()   
-    contact_phone = PhoneNumberField(null=False, blank=False, unique=True, region="PL")
+    image = models.ImageField(upload_to="fundraiser_photos", blank=True)
+    contact_email = models.EmailField(null=False,blank=False)   
+    contact_phone = PhoneNumberField(null=True, blank=True, unique=False, region="PL")
+
+class Skill(models.Model):
+    name = models.CharField(max_length = 80, primary_key=True, null=False, blank=False, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class VolunteerAdvert(models.Model):
+    created_by = models.IntegerField(null=False, blank=False, default=-1)
     fundraiser = models.ForeignKey("Fundraiser", on_delete=models.CASCADE, related_name='VolunteerAdvert', blank=True, null=True)
     role = models.CharField(max_length = 80)
     description = models.CharField(max_length = 250)
     content = models.TextField()
     image = models.ImageField(upload_to="volunteer_photos", blank=True)
-    contact_email = models.EmailField()   
-    contact_phone = PhoneNumberField(null=False, blank=False, unique=True, region="PL")
+    contact_email = models.EmailField(null=False,blank=False)   
+    contact_phone = PhoneNumberField(null=False, blank=False, unique=False, region="PL")
+    skills = models.ManyToManyField(Skill)
 
-#class that will be prepared for storing multiple photos
-class VolunteerPhoto(models.Model):
-    volunteer_advert = models.ForeignKey("VolunteerAdvert", on_delete=models.CASCADE, related_name='VolunteerPhoto', blank=False, null=False)
-    img_description = models.CharField(max_length = 100)
-    image = models.ImageField()
