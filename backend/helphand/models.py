@@ -75,7 +75,7 @@ class Skill(models.Model):
 
 class VolunteerAdvert(models.Model):
     created_by = models.IntegerField(null=False, blank=False, default=-1)
-    fundraiser = models.ForeignKey(Fundraiser, on_delete=models.CASCADE, related_name='VolunteerAdvert', blank=True, null=True)
+    fundraiser = models.ForeignKey(Fundraiser, on_delete=models.CASCADE, related_name='volunteers', blank=True, null=True)
     role = models.CharField(max_length = 80)
     description = models.CharField(max_length = 250)
     content = models.TextField()

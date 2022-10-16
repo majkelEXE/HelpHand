@@ -162,7 +162,7 @@ body:
     volunteers='[1,2]' 
 }
 
-==>GET(get all fundraiser)
+==>GET(get all fundraiser + volunteers connected to it)
 [
     {
         "contact_email": "zbiorka@test.pl",
@@ -179,7 +179,10 @@ body:
             "longtitude": "123141",
             "name": "Dobczyce"
         },
-        "name": "Zbiorka"
+        "name": "Zbiorka",
+        volunteers: [
+            ...
+        ]
     }
 ]
 
