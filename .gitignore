@@ -1,4 +1,7 @@
+__pycache__/
+*.py[cod]
+
+!migrations/__init__.py
+
 .venv/
 media/
-__pycache__/
-!migrations/__init__.py
