@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
@@ -43,9 +44,8 @@ class GetAuthUserView(APIView):
 
         token, _ = Token.objects.get_or_create(user=user)
         return Response({
-            'token': token.key,
-            'email': user.email,
-            }, status=status.HTTP_200_OK)
+            'token': token.key
+        }, status=status.HTTP_200_OK)
 
     def get(self, request):
         token = request.headers.get("Authorization")
@@ -73,13 +73,46 @@ class FundraiserView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        token = request.headers.get("Authorization")
-        if not token:
-            return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
-
         fundraisers = Fundraiser.objects.all()
         fundraisers_data = FundraiserSerializer(fundraisers, many=True).data
         return Response(fundraisers_data, status=status.HTTP_200_OK)        
+
+
+class FundraiserDetail(APIView):
+    authentication_classes = (TokenAuthentication,)
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get_object(self, pk):
+        try:
+            return Fundraiser.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def auth_user(self, request):
+        token = request.headers.get("Authorization")
+        if not token:
+            return
+        return request.user.id
+
+    def get(self, request, pk, format=None):
+        fundraiser = self.get_object(pk)
+        serializer = FundraiserSerializer(fundraiser)
+        return Response(serializer.data) 
+
+    def put(self, request, pk, format=None):
+        #it will be use for updateding
+        pass
+
+    def delete(self, request, pk, format=None):
+        user_id = self.auth_user(request)
+        fundraiser = self.get_object(pk)
+        if user_id == None:
+            return Response(data={'error': 'No Token. Authorization Denied'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        elif fundraiser.created_by != user_id:
+            return Response(data={'error':'Access denied. Cannot delete other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        fundraiser.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class VolunteerAdvertView(APIView):
@@ -100,14 +133,45 @@ class VolunteerAdvertView(APIView):
             return Response(data=volunteer_advert_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        token = request.headers.get("Authorization")
-        if not token:
-            return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
-
         volunteer_adverts = VolunteerAdvert.objects.all()
         volunteer_adverts_data = VolunteerAdvertSerializer(volunteer_adverts, many=True).data
         return Response(volunteer_adverts_data, status=status.HTTP_200_OK)
-        
+
+class VolunteerAdvertDetail(APIView):
+    authentication_classes = (TokenAuthentication,)
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get_object(self, pk):
+        try:
+            return VolunteerAdvert.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def auth_user(self, request):
+        token = request.headers.get("Authorization")
+        if not token:
+            return
+        return request.user.id
+
+    def get(self, request, pk, format=None):
+        volunteer = self.get_object(pk)
+        serializer = VolunteerAdvertSerializer(volunteer)
+        return Response(serializer.data) 
+
+    def put(self, request, pk, format=None):
+        #it will be use for updateding
+        pass
+
+    def delete(self, request, pk, format=None):
+        user_id = self.auth_user(request)
+        volunteer = self.get_object(pk)
+        if user_id == None:
+            return Response(data={'error': 'No Token. Authorization Denied'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        elif volunteer.created_by != user_id:
+            return Response(data={'error':'Access denied. Cannot delete other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        volunteer.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)        
 #CLASSES FOR CUSTOM INTERACTION
 
 class UserEntitiesViewSet(viewsets.ModelViewSet):
@@ -128,6 +192,5 @@ class UserEntitiesViewSet(viewsets.ModelViewSet):
         token = request.headers.get("Authorization")
         if not token:
             return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
-        # user = User.objects.get(id=request.user.id)
         volunteers = VolunteerAdvert.objects.filter(created_by=request.user.id)
         return Response(VolunteerAdvertSerializer(volunteers, many=True).data, status=status.HTTP_200_OK)         

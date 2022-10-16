@@ -1,2 +1,4 @@
 .venv/
-.media/
+media/
+__pycache__/
+!migrations/__init__.py

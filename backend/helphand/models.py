@@ -51,21 +51,21 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-class Location(models.Model):
-    name = models.CharField(max_length = 120)
-    latitude = models.TextField()
-    longtitude = models.TextField()
-
 class Fundraiser(models.Model):
     created_by = models.IntegerField(null=False, blank=False, default=-1)
     name = models.CharField(max_length = 50)
     description = models.CharField(max_length = 250)
-    location = models.OneToOneField(Location, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateTimeField()#FORMAT: 2006-10-25 14:30:59
     content = models.TextField()
     image = models.ImageField(upload_to="fundraiser_photos", blank=True)
     contact_email = models.EmailField(null=False,blank=False)   
     contact_phone = PhoneNumberField(null=True, blank=True, unique=False, region="PL")
+
+class Location(models.Model):
+    name = models.CharField(max_length = 120)
+    latitude = models.TextField()
+    longtitude = models.TextField()
+    fundraiser = models.OneToOneField(Fundraiser, on_delete=models.CASCADE)
 
 class Skill(models.Model):
     name = models.CharField(max_length = 80, primary_key=True, null=False, blank=False, unique=True)
@@ -75,7 +75,7 @@ class Skill(models.Model):
 
 class VolunteerAdvert(models.Model):
     created_by = models.IntegerField(null=False, blank=False, default=-1)
-    fundraiser = models.ForeignKey("Fundraiser", on_delete=models.CASCADE, related_name='VolunteerAdvert', blank=True, null=True)
+    fundraiser = models.ForeignKey(Fundraiser, on_delete=models.CASCADE, related_name='VolunteerAdvert', blank=True, null=True)
     role = models.CharField(max_length = 80)
     description = models.CharField(max_length = 250)
     content = models.TextField()
