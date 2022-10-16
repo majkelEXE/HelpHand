@@ -186,7 +186,23 @@ body:
 ------------------------------------------------------------
 /api/user_entities/fundraiser/
 ==>GET(get all fundraiser that BELONGS TO the USER)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
 
 ------------------------------------------------------------
 /api/user_entities/volunteer/
 ==>GET(get all volunteer_adverts that BELONGS TO the USER)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
+
+------------------------------------------------------------
+/api/fundraiser/:pk 
+==>GET(get selected entity)
+
+==>DELTE(delete selected entity)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
+
+------------------------------------------------------------
+/api/volunteer/:pk 
+==>GET(get selected entity)
+
+==>DELTE(delete selected entity)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 

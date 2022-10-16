@@ -32,8 +32,8 @@ class FundraiserSerializer(serializers.ModelSerializer):
         user_id = self.context.get("user_id")
         location = json.loads(self.context.get("location"))
         volunteers = json.loads(self.context.get("volunteers"))
-        location_obj = Location.objects.create(**location)
-        fundraiser = Fundraiser.objects.create(**validated_data, created_by=user_id, location = location_obj)
+        fundraiser = Fundraiser.objects.create(**validated_data, created_by=user_id)
+        Location.objects.create(**location, fundraiser=fundraiser)
         for volunteer in volunteers:
             volunteer_obj = VolunteerAdvert.objects.get(id=volunteer)
             volunteer_obj.fundraiser = fundraiser
