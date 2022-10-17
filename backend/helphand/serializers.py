@@ -15,32 +15,6 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-
-class LocationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Location
-        fields = "__all__"
-
-class FundraiserSerializer(serializers.ModelSerializer):
-    location = LocationSerializer(read_only=True)
-    
-    class Meta:
-        model = Fundraiser
-        fields = "__all__"
-
-    def create(self, validated_data):
-        user_id = self.context.get("user_id")
-        location = json.loads(self.context.get("location"))
-        volunteers = json.loads(self.context.get("volunteers"))
-        location_obj = Location.objects.create(**location)
-        fundraiser = Fundraiser.objects.create(**validated_data, created_by=user_id, location = location_obj)
-        for volunteer in volunteers:
-            volunteer_obj = VolunteerAdvert.objects.get(id=volunteer)
-            volunteer_obj.fundraiser = fundraiser
-            volunteer_obj.save()
-        return fundraiser
-
-
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
@@ -63,3 +37,27 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
 
         return volunteer_advert
     
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = "__all__"
+
+class FundraiserSerializer(serializers.ModelSerializer):
+    location = LocationSerializer(read_only=True)
+    volunteers = VolunteerAdvertSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Fundraiser
+        fields = "__all__"
+        
+    def create(self, validated_data):
+        user_id = self.context.get("user_id")
+        location = json.loads(self.context.get("location"))
+        volunteers = json.loads(self.context.get("volunteers"))
+        fundraiser = Fundraiser.objects.create(**validated_data, created_by=user_id)
+        Location.objects.create(**location, fundraiser=fundraiser)
+        for volunteer in volunteers:
+            volunteer_obj = VolunteerAdvert.objects.get(id=volunteer)
+            volunteer_obj.fundraiser = fundraiser
+            volunteer_obj.save()
+        return fundraiser
