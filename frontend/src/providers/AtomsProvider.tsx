@@ -21,10 +21,13 @@ const AtomsProvider: FC<PropsWithChildren> = ({ children }) => {
   const setUserFundraises = useSetRecoilState(userFundraisesState);
 
   const fetchAtoms = async () => {
-    await fetchVolunteers(token, setVolunteers);
-    await fetchFundraises(token, setFundraises);
-    await fetchUserVolunteers(token, setUserVolunteers);
-    await fetchUserFundraises(token, setUserFundraises);
+    await fetchVolunteers(setVolunteers);
+    await fetchFundraises(setFundraises);
+    if (token) {
+      await fetchUserVolunteers(setUserVolunteers, token);
+      await fetchUserFundraises(setUserFundraises, token);
+    }
+
     setSync(false);
   };
 

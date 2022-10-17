@@ -4,8 +4,8 @@ import { SetterOrUpdater } from 'recoil';
 import fundraiseModel from '../models/Fundraise';
 
 const fetchUserFundraises = async (
-  token: string,
-  setUserFundraises: SetterOrUpdater<fundraiseModel[]>
+  setUserFundraises: SetterOrUpdater<fundraiseModel[]>,
+  token: string
 ) => {
   let fundraises: fundraiseModel[] = (
     await axios.get("/api/fundraiser", {

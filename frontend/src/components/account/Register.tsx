@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import showModalState from '../../atoms/showModal';
+import syncState from '../../atoms/sync';
 import tokenState from '../../atoms/token';
 import css from './Register.module.css';
 
@@ -22,6 +23,7 @@ const Register = () => {
 
   const setShowModal = useSetRecoilState(showModalState);
   const setToken = useSetRecoilState(tokenState);
+  const setSync = useSetRecoilState(syncState);
 
   const registerHandler = async () => {
     if (
@@ -64,6 +66,7 @@ const Register = () => {
       let token = res.data.token;
 
       setToken(token);
+      setSync(true);
       navigate("/");
       setShowModal(false);
     } catch (e) {

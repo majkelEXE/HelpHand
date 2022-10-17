@@ -4,8 +4,8 @@ import { SetterOrUpdater } from 'recoil';
 import volunteerModel from '../models/Volunteer';
 
 const fetchUserVolunteers = async (
-  token: string,
-  setUserVolunteers: SetterOrUpdater<volunteerModel[]>
+  setUserVolunteers: SetterOrUpdater<volunteerModel[]>,
+  token: string
 ) => {
   let volunteers: volunteerModel[] = (
     await axios.get("/api/user_entities/volunteer/", {
