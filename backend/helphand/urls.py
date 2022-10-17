@@ -7,7 +7,9 @@ from .views import (
     UserView,
     GetAuthUserView,
     VolunteerAdvertView, 
+    VolunteerAdvertDetail,
     FundraiserView,
+    FundraiserDetail,
     UserEntitiesViewSet
 )
 
@@ -20,6 +22,8 @@ urlpatterns = [
     path('auth', GetAuthUserView.as_view()),
     path('volunteer', VolunteerAdvertView.as_view()),
     path('fundraiser', FundraiserView.as_view()),  
+    path('fundraiser/<int:pk>', FundraiserDetail.as_view()),  
+    path('volunteer/<int:pk>', VolunteerAdvertDetail.as_view()),  
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

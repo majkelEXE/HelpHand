@@ -162,31 +162,94 @@ body:
     volunteers='[1,2]' 
 }
 
-==>GET(get all fundraiser)
+==>GET(get all fundraiser + volunteers connected to it)
 [
     {
         "contact_email": "zbiorka@test.pl",
         "contact_phone": "+48133252646",
         "content": "zbiorka testowa",
         "created_by": 1,
-        "date": "2022-07-07",
+        "date": "2022-07-07T00:00:00Z",
         "description": "jakas tam zbiorka",
         "id": 1,
-        "image": "/media/fundraiser_photos/test_0SClpMM.jpg",
+        "image": "/media/fundraiser_photos/test.jpg",
         "location": {
+            "fundraiser": 1,
             "id": 1,
             "latitude": "123241",
             "longtitude": "123141",
             "name": "Dobczyce"
         },
-        "name": "Zbiorka"
+        "name": "Zbiorka",
+        "volunteers": [
+            {
+                "contact_email": "pierwsza@test.pl",
+                "contact_phone": "+48133252646",
+                "content": "rola pierwsza",
+                "created_by": 1,
+                "description": "pierwsza",
+                "fundraiser": 1,
+                "id": 1,
+                "image": "/media/volunteer_photos/test.jpg",
+                "role": "Pierwsza",
+                "skills": [
+                    {
+                        "name": "aaa"
+                    },
+                    {
+                        "name": "bbbb"
+                    },
+                    {
+                        "name": "ccc"
+                    }
+                ]
+            },
+            {
+                "contact_email": "druga@test.pl",
+                "contact_phone": "+48443252646",
+                "content": "rola druga",
+                "created_by": 1,
+                "description": "druga",
+                "fundraiser": 1,
+                "id": 2,
+                "image": "/media/volunteer_photos/test_2QhOC9G.jpg",
+                "role": "Druga",
+                "skills": [
+                    {
+                        "name": "aaa"
+                    },
+                    {
+                        "name": "ccc"
+                    },
+                    {
+                        "name": "dddd"
+                    }
+                ]
+            }
+        ]
     }
 ]
 
 ------------------------------------------------------------
 /api/user_entities/fundraiser/
 ==>GET(get all fundraiser that BELONGS TO the USER)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
 
 ------------------------------------------------------------
 /api/user_entities/volunteer/
 ==>GET(get all volunteer_adverts that BELONGS TO the USER)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
+
+------------------------------------------------------------
+/api/fundraiser/:pk 
+==>GET(get selected entity)
+
+==>DELTE(delete selected entity)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
+
+------------------------------------------------------------
+/api/volunteer/:pk 
+==>GET(get selected entity)
+
+==>DELTE(delete selected entity)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
