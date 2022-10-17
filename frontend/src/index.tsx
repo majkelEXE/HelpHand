@@ -11,7 +11,7 @@ import Layout from './components/layout/Layout';
 import FundraisesMap from './components/map/FundraisesMap';
 import AddFundraise from './components/panel/AddFundraise';
 import AddVolunteer from './components/panel/AddVolunteer';
-import ManageFundraising from './components/panel/ManageFundraising';
+import ManageFundraises from './components/panel/ManageFundraises';
 import ManageVolunteers from './components/panel/ManageVolunteers';
 import Panel from './components/panel/Panel';
 import Voluntary from './components/voluntary/Voluntary';
@@ -35,22 +35,6 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
-  // {
-  //   path: "/login",
-  //   element: (
-  //     <Layout>
-  //       <Login />
-  //     </Layout>
-  //   ),
-  // },
-  // {
-  //   path: "/register",
-  //   element: (
-  //     <Layout>
-  //       <Register />
-  //     </Layout>
-  //   ),
-  // },
   {
     path: "/panel",
     element: (
@@ -84,10 +68,10 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/managefundraising",
+    path: "/managefundraises",
     element: (
       <Layout>
-        <ManageFundraising />
+        <ManageFundraises />
       </Layout>
     ),
   },

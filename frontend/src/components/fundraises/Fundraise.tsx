@@ -22,6 +22,13 @@ const Fundraise = () => {
             {fundraise.volonteers}
         </div> */}
 
+        {fundraise.volunteers.length > 0 && <h2>Kogo potrzebujemy?</h2>}
+        {fundraise.volunteers.map((v) => (
+          <a key={v.id} href={`/volunteer/${v.id}`} className="primaryButton">
+            {v.role}
+          </a>
+        ))}
+
         <h2>Kiedy i gdzie?</h2>
         <h3>{new Date(fundraise.date).toLocaleString()}</h3>
         <h3>{fundraise.location.name}</h3>

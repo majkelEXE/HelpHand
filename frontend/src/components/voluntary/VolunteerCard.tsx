@@ -16,8 +16,10 @@ const VolunteerCard: FC<{ volunteer: volunteerModel }> = ({ volunteer }) => {
         <h1 className={css.role}>{volunteer.role}</h1>
         <h2 className={css.desc}>{volunteer.description}</h2>
         <div className={css.skills}>
-          {volunteer.skills.slice(0, 3).map((s) => (
-            <p className={css.skill}>- {s.name}</p>
+          {volunteer.skills.slice(0, 3).map((s, i) => (
+            <p key={i} className={css.skill}>
+              - {s.name}
+            </p>
           ))}
         </div>
       </div>

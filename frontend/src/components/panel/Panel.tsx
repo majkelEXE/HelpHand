@@ -19,7 +19,7 @@ const Panel = () => {
       </div>
       <div
         onClick={() => {
-          navigate("/managefundraising");
+          navigate("/managefundraises");
         }}
       >
         <h1>Zbiórki</h1>

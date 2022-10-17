@@ -7,13 +7,8 @@ const fetchVolunteers = async (
   token: string,
   setVolunteers: SetterOrUpdater<volunteerModel[]>
 ) => {
-  let volunteers: volunteerModel[] = (
-    await axios.get("/api/volunteer", {
-      headers: {
-        Authorization: `token ${token}`,
-      },
-    })
-  ).data;
+  let volunteers: volunteerModel[] = (await axios.get("/api/volunteer", {}))
+    .data;
 
   setVolunteers(volunteers);
 };

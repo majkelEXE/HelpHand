@@ -10,15 +10,6 @@
   width: 50%;
 }
 
-.fundraiseContainer p,
-.fundraiseContainer h1,
-.fundraiseContainer h2,
-.fundraiseContainer h3 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .fundraiseData {
   margin: 0 25px;
   color: var(--textColor);
