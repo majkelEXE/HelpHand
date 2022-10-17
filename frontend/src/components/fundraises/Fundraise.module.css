@@ -1,0 +1,43 @@
+.fundraiseContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.fundraiseContainer > div {
+  width: 50%;
+}
+
+.fundraiseContainer p,
+.fundraiseContainer h1,
+.fundraiseContainer h2,
+.fundraiseContainer h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fundraiseData {
+  margin: 0 25px;
+  color: var(--textColor);
+}
+
+.fundraiseData > h1 {
+  font-size: 75px;
+  margin: 0;
+}
+
+.fundraiseImage img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.fundraiseData > a {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--textColor);
+  margin: 10px;
+  font-size: 18px;
+}

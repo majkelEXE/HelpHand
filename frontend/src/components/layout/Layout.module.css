@@ -1,0 +1,23 @@
+.content {
+  height: calc(100vh - 100px);
+  width: 100%;
+  position: relative;
+}
+
+.enter {
+  transform: translateX(-100%);
+}
+
+.enterActive {
+  transform: translateX(0);
+  transition: 0.3s;
+}
+
+.exit {
+  transform: translateX(0);
+}
+
+.exitActive {
+  transform: translateX(-100%);
+  transition: 0.3s;
+}

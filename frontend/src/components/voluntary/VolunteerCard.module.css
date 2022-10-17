@@ -1,0 +1,47 @@
+.card {
+  background-color: var(--backgroundColor);
+  min-width: 400px;
+  max-width: 400px;
+  height: 200px;
+  display: flex;
+  border-radius: 10px;
+  justify-content: space-between;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.data {
+  width: 50%;
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.data h1,
+.data h2,
+.data p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--textColor);
+}
+
+.imageContainer {
+  box-sizing: border-box;
+  padding: 25px;
+  width: 50%;
+  height: 100%;
+}
+
+.imageContainer > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.skills {
+  margin: 10px 0;
+}
