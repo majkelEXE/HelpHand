@@ -6,17 +6,34 @@
   box-sizing: border-box;
 }
 
+.mobileVolunteerContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+}
+
 .volunteerContainer > div {
   width: 50%;
 }
 
 .volunteerData {
-  margin: 0 25px;
   color: var(--textColor);
+  margin-bottom: 25px;
+  margin-right: 25px;
 }
 
 .volunteerData > h1 {
-  font-size: 75px;
+  font-size: 50px;
+  margin-top: 0;
+}
+
+.volunteerData > h2 {
+  font-size: 30px;
+  margin: 0;
+}
+
+.volunteerData > h3 {
+  font-size: 20px;
   margin: 0;
 }
 
@@ -31,6 +48,10 @@
   color: var(--textColor);
   margin: 10px;
   font-size: 18px;
+}
+
+.requirements {
+  margin: 25px 0;
 }
 
 .requirements p {
