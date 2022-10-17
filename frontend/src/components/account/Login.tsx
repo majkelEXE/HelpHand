@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import showModalState from '../../atoms/showModal';
+import syncState from '../../atoms/sync';
 import tokenState from '../../atoms/token';
 import css from './Login.module.css';
 
@@ -18,6 +19,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const setShowModal = useSetRecoilState(showModalState);
+
+  const setSync = useSetRecoilState(syncState);
 
   const loginHandler = async () => {
     if (!email || !password) {
@@ -34,6 +37,7 @@ const Login = () => {
       let token = res.data.token;
 
       setToken(token);
+      setSync(true);
       navigate("/");
       setShowModal(false);
     } catch (e) {
