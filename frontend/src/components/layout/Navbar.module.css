@@ -1,0 +1,41 @@
+.navbarContainer {
+  background-color: var(--backgroundColor);
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 25px;
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--borderColor);
+}
+
+.menu {
+  display: flex;
+  padding-right: 127px;
+  margin-right: auto;
+  color: var(--textColor);
+  font-size: 30px;
+}
+
+.menu:hover {
+  cursor: pointer;
+}
+
+.logo {
+  color: var(--textColor);
+  margin: 0;
+}
+
+.accountContainer {
+  margin-left: auto;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accountContainer > div,
+.accountContainer > a {
+  margin-left: 10px;
+}

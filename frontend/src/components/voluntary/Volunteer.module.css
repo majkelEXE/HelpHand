@@ -1,0 +1,49 @@
+.volunteerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.volunteerContainer > div {
+  width: 50%;
+}
+
+.volunteerContainer p,
+.volunteerContainer h1,
+.volunteerContainer h2,
+.volunteerContainer h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.volunteerData {
+  margin: 0 25px;
+  color: var(--textColor);
+}
+
+.volunteerData > h1 {
+  font-size: 75px;
+  margin: 0;
+}
+
+.volunteerImage img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.volunteerData > a {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--textColor);
+  margin: 10px;
+  font-size: 18px;
+}
+
+.requirements p {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}

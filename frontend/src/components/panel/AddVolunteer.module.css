@@ -1,0 +1,111 @@
+.formContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 100%;
+
+  flex-wrap: wrap;
+}
+
+.formContainer > div {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer > div > h1 {
+  margin: 0;
+  margin-top: 25px;
+}
+
+.formContainer > div input {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.formContainer > div > svg {
+  color: var(--color-1);
+  font-size: 50px;
+}
+
+.formContainer > div > svg:hover {
+  cursor: pointer;
+}
+
+.requirements {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 400px;
+  width: 400px;
+  overflow-y: auto;
+  background-color: var(--backgroundColor);
+  padding: 25px;
+  border-radius: 8px;
+}
+
+.requirement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.requirement > p {
+  color: var(--textColor);
+  margin: 0;
+}
+
+.requirement > svg {
+  color: var(--textColor);
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+.requirement > svg:hover {
+  cursor: pointer;
+}
+
+.image {
+  width: 400px;
+  height: 400px;
+}
+
+.image > img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 5px;
+  background-color: var(--backgroundColor);
+}
+
+.fileContainer {
+  width: 80%;
+  height: 20px;
+  background-color: white;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addVolunteerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: calc(100vh - 100px);
+  background-color: var(--darkBackgroundColor);
+}
+
+.add {
+  margin: 25px 0;
+}

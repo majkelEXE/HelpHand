@@ -1,0 +1,163 @@
+.formContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 100%;
+
+  flex-wrap: wrap;
+}
+
+.formContainer > div {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer > div > h1 {
+  margin: 0;
+  margin-top: 25px;
+}
+
+.formContainer > div input {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.formContainer > div > svg {
+  color: var(--color-1);
+  font-size: 50px;
+}
+
+.formContainer > div > svg:hover {
+  cursor: pointer;
+}
+
+.image {
+  width: 400px;
+  height: 400px;
+}
+
+.image > img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 5px;
+  background-color: var(--backgroundColor);
+}
+
+.fileContainer {
+  width: 80%;
+  height: 20px;
+  background-color: white;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addFundraiseContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: calc(100vh - 100px);
+  background-color: var(--darkBackgroundColor);
+}
+
+.add {
+  margin: 25px 0;
+}
+
+.location {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.pin {
+  white-space: pre-line;
+  background-color: var(--mainColor);
+  color: var(--backgroundColor);
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  max-width: 200px;
+}
+
+.pin:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: var(--mainColor);
+  border-bottom: 0;
+  margin-left: -10px;
+  margin-bottom: -10px;
+}
+
+.volunteers {
+  height: 250px;
+  width: 100%;
+  overflow-y: auto;
+  background-color: var(--backgroundColor);
+  padding: 25px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.volunteer {
+  margin: 0;
+  font-size: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  transition: 0.2s;
+  background-color: var(--darkBackgroundColor);
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-weight: bold;
+  color: var(--textColor);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.volunteer:hover {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.selectedVolunteer {
+  color: var(--backgroundColor);
+  background-color: var(--mainColor);
+  transition: 0.2s;
+}
+
+.selectedVolunteer:hover {
+  background-color: var(--darkMainColor);
+  transition: 0.2s;
+}
+
+.searchLocation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchLocation > div {
+  margin: 10px 0 15px 10px;
+}

@@ -1,19 +1,132 @@
+import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
+
+import Fundraise from './components/fundraises/Fundraise';
+import Fundraises from './components/fundraises/Fundraises';
+import Layout from './components/layout/Layout';
+import FundraisesMap from './components/map/FundraisesMap';
+import AddFundraise from './components/panel/AddFundraise';
+import AddVolunteer from './components/panel/AddVolunteer';
+import ManageFundraising from './components/panel/ManageFundraising';
+import ManageVolunteers from './components/panel/ManageVolunteers';
+import Panel from './components/panel/Panel';
+import Voluntary from './components/voluntary/Voluntary';
+import Volunteer from './components/voluntary/Volunteer';
+import AtomsProvider from './providers/AtomsProvider';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <Layout>
+        <Fundraises />
+      </Layout>
+    ),
+  },
+  {
+    path: "/voluntary",
+    element: (
+      <Layout>
+        <Voluntary />
+      </Layout>
+    ),
+  },
+  // {
+  //   path: "/login",
+  //   element: (
+  //     <Layout>
+  //       <Login />
+  //     </Layout>
+  //   ),
+  // },
+  // {
+  //   path: "/register",
+  //   element: (
+  //     <Layout>
+  //       <Register />
+  //     </Layout>
+  //   ),
+  // },
+  {
+    path: "/panel",
+    element: (
+      <Layout>
+        <Panel />
+      </Layout>
+    ),
+  },
+  {
+    path: "/addvolunteer",
+    element: (
+      <Layout>
+        <AddVolunteer />
+      </Layout>
+    ),
+  },
+  {
+    path: "/addfundraise",
+    element: (
+      <Layout>
+        <AddFundraise />
+      </Layout>
+    ),
+  },
+  {
+    path: "/managevolunteers",
+    element: (
+      <Layout>
+        <ManageVolunteers />
+      </Layout>
+    ),
+  },
+  {
+    path: "/managefundraising",
+    element: (
+      <Layout>
+        <ManageFundraising />
+      </Layout>
+    ),
+  },
+  {
+    path: "/volunteer/:id",
+    element: (
+      <Layout>
+        <Volunteer />
+      </Layout>
+    ),
+  },
+  {
+    path: "/fundraise/:id",
+    element: (
+      <Layout>
+        <Fundraise />
+      </Layout>
+    ),
+  },
+  {
+    path: "/map",
+    element: (
+      <Layout>
+        <FundraisesMap />
+      </Layout>
+    ),
+  },
+]);
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  document.getElementById("root") as HTMLElement
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+root.render(
+  <React.StrictMode>
+    <RecoilRoot>
+      <AtomsProvider>
+        <RouterProvider router={router} />
+      </AtomsProvider>
+    </RecoilRoot>
+  </React.StrictMode>
+);
