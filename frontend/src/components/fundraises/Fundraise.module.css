@@ -6,17 +6,34 @@
   box-sizing: border-box;
 }
 
+.mobileFundraiseContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+}
+
 .fundraiseContainer > div {
   width: 50%;
 }
 
 .fundraiseData {
-  margin: 0 25px;
   color: var(--textColor);
+  margin-right: 25px;
+  margin-bottom: 25px;
 }
 
 .fundraiseData > h1 {
-  font-size: 75px;
+  font-size: 50px;
+  margin-top: 0;
+}
+
+.fundraiseData > h2 {
+  font-size: 30px;
+  margin: 0;
+}
+
+.fundraiseData > h3 {
+  font-size: 20px;
   margin: 0;
 }
 
@@ -25,10 +42,37 @@
   border-radius: 8px;
 }
 
-.fundraiseData > a {
+.contact {
+  margin-top: 25px;
+}
+
+.contact > a {
   text-decoration: none;
   font-weight: bold;
   color: var(--textColor);
   margin: 10px;
   font-size: 18px;
+}
+
+.contact > h2 {
+  margin: 0;
+}
+
+.neededVolunteers {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.neededVolunteers {
+  margin-top: 25px;
+}
+
+.location {
+  margin: 25px 0;
+}
+
+.location h2,
+.location h3 {
+  margin: 0;
 }

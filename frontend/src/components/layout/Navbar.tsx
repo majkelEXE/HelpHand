@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { RiMenuFill } from 'react-icons/ri';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import modalComponentState from '../../atoms/modalComponent';
@@ -17,6 +17,7 @@ const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
   const resetToken = useResetRecoilState(tokenState);
   const setModalComponent = useSetRecoilState(modalComponentState);
   const setShowModal = useSetRecoilState(showModalState);
+  const navigate = useNavigate();
 
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
 
@@ -27,7 +28,11 @@ const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
         onClick={() => setShowSideBar((prevState) => !prevState)}
       />
 
-      {!isMobile && <h1 className={css.logo}>HelpHand</h1>}
+      {!isMobile && (
+        <h1 className={css.logo} onClick={() => navigate("/")}>
+          HelpHand
+        </h1>
+      )}
       <div className={css.accountContainer}>
         {!token ? (
           <>

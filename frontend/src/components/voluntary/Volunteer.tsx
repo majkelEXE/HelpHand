@@ -1,3 +1,4 @@
+import { useMediaQuery } from 'react-responsive';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -9,8 +10,14 @@ const Volunteer = () => {
   const volunteers = useRecoilValue(volunteersState);
   const volunteer = volunteers.filter((v) => v.id == parseInt(id ?? ""))[0];
 
+  const isMobile = useMediaQuery({ query: "(max-width: 1000px)" });
+
   return (
-    <div className={css.volunteerContainer}>
+    <div
+      className={
+        isMobile ? css.mobileVolunteerContainer : css.volunteerContainer
+      }
+    >
       <div className={css.volunteerData}>
         <h1>{volunteer.role}</h1>
         <h2>{volunteer.description}</h2>
