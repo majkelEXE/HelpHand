@@ -1,3 +1,4 @@
+import mapboxgl from 'mapbox-gl';
 import maplibreGl from 'maplibre-gl';
 import Map, { Marker } from 'react-map-gl';
 import { useNavigate } from 'react-router-dom';
