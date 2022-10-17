@@ -13,7 +13,8 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-transition-group": "^4.4.5",
     "axios": "^1.1.2",
-    "mapbox-gl": "^1.13.0",
+    "craco": "^0.0.3",
+    "mapbox-gl": "^2.10.0",
     "maplibre-gl": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -51,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-map-gl": "^6.1.3"
   }
 }
