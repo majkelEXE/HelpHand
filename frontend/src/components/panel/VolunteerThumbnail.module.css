@@ -42,11 +42,28 @@
 .thumbnailData p,
 .thumbnailData h1,
 .thumbnailData h2 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--textColor);
-  width: 250px;
+  max-width: 250px;
+}
+
+.thumbnailData h1 {
+  font-size: 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.thumbnailData h2 {
+  font-size: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.thumbnailData h3 {
+  font-size: 12px;
 }
 
 .image {

@@ -7,13 +7,10 @@ const fetchFundraises = async (
   token: string,
   setFundraises: SetterOrUpdater<fundraiseModel[]>
 ) => {
-  let fundraises: fundraiseModel[] = (
-    await axios.get("/api/fundraiser", {
-      headers: {
-        Authorization: `token ${token}`,
-      },
-    })
-  ).data;
+  let fundraises: fundraiseModel[] = (await axios.get("/api/fundraiser", {}))
+    .data;
+
+  console.log(fundraises);
 
   setFundraises(fundraises);
 };

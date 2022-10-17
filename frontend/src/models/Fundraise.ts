@@ -11,5 +11,5 @@ export default interface fundraiseModel {
   date: Date;
   image: string;
   location: Location;
-  volonteers: volunteerModel[];
+  volunteers: volunteerModel[];
 }

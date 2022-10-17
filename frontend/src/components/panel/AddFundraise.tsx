@@ -144,9 +144,12 @@ const AddFundraise = () => {
   const dragHandler = (e: ViewStateChangeEvent) => {
     setLatitude(e.viewState.latitude);
     setLongitude(e.viewState.longitude);
+    setZoom(e.viewState.zoom);
   };
 
   const zoomHandler = (e: ViewStateChangeEvent) => {
+    setLatitude(e.viewState.latitude);
+    setLongitude(e.viewState.longitude);
     setZoom(e.viewState.zoom);
   };
 
@@ -206,8 +209,7 @@ const AddFundraise = () => {
           />
           <h1>Data</h1>
           <input
-            // type="datetime-local"
-            type="date"
+            type="datetime-local"
             className="textInput"
             value={date}
             onChange={(e) => setDate(e.target.value)}

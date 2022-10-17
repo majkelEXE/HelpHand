@@ -10,15 +10,6 @@
   width: 50%;
 }
 
-.volunteerContainer p,
-.volunteerContainer h1,
-.volunteerContainer h2,
-.volunteerContainer h3 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .volunteerData {
   margin: 0 25px;
   color: var(--textColor);

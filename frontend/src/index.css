@@ -23,7 +23,7 @@ code {
 }
 
 .primaryButton {
-  color: var(--backgroundColor);
+  color: var(--backgroundColor) !important;
   font-weight: bold;
   text-decoration: none;
   padding: 10px;

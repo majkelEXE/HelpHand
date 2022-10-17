@@ -6,19 +6,19 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import syncState from '../../atoms/sync';
 import tokenState from '../../atoms/token';
-import userVolunteersState from '../../atoms/userVolunteers';
-import css from './ManageVolunteers.module.css';
-import VolunteerThumbnail from './VolunteerThumbnail';
+import userFundraisesState from '../../atoms/userFundraises';
+import FundraiseThumbnail from './FundraiseThumbnail';
+import css from './ManageFundraises.module.css';
 
-const ManageVolunteers = () => {
+const ManageFundraises = () => {
   const navigate = useNavigate();
-  const [volunteers, setVolunteers] = useRecoilState(userVolunteersState);
+  const [fundraises, setFundraises] = useRecoilState(userFundraisesState);
   const token = useRecoilValue(tokenState);
   const setSync = useSetRecoilState(syncState);
 
   const deleteHandler = async (e: MouseEvent<HTMLElement>, id: number) => {
     e.stopPropagation();
-    await axios.delete(`/api/volunteer/${id}`, {
+    await axios.delete(`/api/fundraiser/${id}`, {
       headers: { Authorization: `token ${token}` },
     });
     setSync(true);
@@ -26,11 +26,11 @@ const ManageVolunteers = () => {
 
   return (
     <div className={css.manageContainer}>
-      {volunteers.length > 0 ? (
-        volunteers.map((v) => (
-          <VolunteerThumbnail
-            key={v.id}
-            volunteer={v}
+      {fundraises.length > 0 ? (
+        fundraises.map((f) => (
+          <FundraiseThumbnail
+            key={f.id}
+            fundraise={f}
             deleteHandler={deleteHandler}
           />
         ))
@@ -39,11 +39,11 @@ const ManageVolunteers = () => {
       )}
       <RiAddCircleFill
         onClick={() => {
-          navigate("/addvolunteer");
+          navigate("/addfundraise");
         }}
       />
     </div>
   );
 };
 
-export default ManageVolunteers;
+export default ManageFundraises;
