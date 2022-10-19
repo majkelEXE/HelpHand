@@ -7,6 +7,7 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import modalComponentState from '../../atoms/modalComponent';
 import showModalState from '../../atoms/showModal';
 import tokenState from '../../atoms/token';
+import Logo from './Logo';
 import css from './Navbar.module.css';
 
 const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
@@ -28,11 +29,16 @@ const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
         onClick={() => setShowSideBar((prevState) => !prevState)}
       />
 
-      {!isMobile && (
-        <h1 className={css.logo} onClick={() => navigate("/")}>
-          HelpHand
-        </h1>
-      )}
+      <div className={css.logo} onClick={() => navigate("/")}>
+        {!isMobile && (
+          <h1>
+            <span>Help</span>Hand
+          </h1>
+        )}
+
+        <Logo />
+      </div>
+
       <div className={css.accountContainer}>
         {!token ? (
           <>
@@ -58,7 +64,7 @@ const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
         ) : (
           <>
             <Link to={"/"} className={"secondaryButton"} onClick={resetToken}>
-              LogOut
+              Wyloguj
             </Link>
             <Link to={"/panel"} className={"primaryButton"}>
               Panel

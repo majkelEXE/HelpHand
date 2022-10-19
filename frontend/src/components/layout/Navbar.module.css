@@ -23,8 +23,22 @@
 }
 
 .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.logo h1 {
   color: var(--textColor);
   margin: 0;
+}
+
+.logo span {
+  color: var(--mainColor);
 }
 
 .accountContainer {

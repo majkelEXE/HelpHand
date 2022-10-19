@@ -24,7 +24,7 @@ const VolunteerCard: FC<{ volunteer: volunteerModel }> = ({ volunteer }) => {
         </div>
       </div>
       <div className={css.imageContainer}>
-        <img src={`/api/${volunteer.image}`} alt="IMAGE" />
+        <img src={`/api${volunteer.image}`} alt="IMAGE" />
       </div>
     </div>
   );
