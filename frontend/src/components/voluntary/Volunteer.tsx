@@ -38,7 +38,7 @@ const Volunteer = () => {
         </a>
       </div>
       <div className={css.volunteerImage}>
-        <img src={`/api/${volunteer.image}`} />
+        <img src={`/api${volunteer.image}`} />
       </div>
     </div>
   );

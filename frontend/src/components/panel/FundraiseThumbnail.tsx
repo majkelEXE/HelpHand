@@ -24,7 +24,7 @@ const FundraiseThumbnail: FC<{
       </div>
 
       {!isMobile && (
-        <img src={`/api/${fundraise.image}`} className={css.image} />
+        <img src={`/api${fundraise.image}`} className={css.image} />
       )}
       <div
         className={css.thumbnailAction}

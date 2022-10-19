@@ -1,4 +1,5 @@
 import { FC, PropsWithChildren, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { CSSTransition } from 'react-transition-group';
 import { useRecoilValue } from 'recoil';
 
@@ -32,6 +33,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
+      <Helmet>
+        <title>HelpHand</title>
+      </Helmet>
       <Navbar setShowSideBar={setShowSideBar} />
       <div className={css.content}>
         <CSSTransition

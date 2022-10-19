@@ -71,7 +71,7 @@ const Fundraise = () => {
         </div>
       </div>
       <div className={css.fundraiseImage}>
-        <img src={`/api/${fundraise.image}`} />
+        <img src={`/api${fundraise.image}`} />
       </div>
     </div>
   );

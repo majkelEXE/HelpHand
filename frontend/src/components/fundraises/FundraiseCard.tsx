@@ -18,7 +18,7 @@ const FundraiseCard: FC<{ fundraise: fundraiseModel }> = ({ fundraise }) => {
         <h3 className={css.address}>{fundraise.location.name}</h3>
       </div>
       <div className={css.imageContainer}>
-        <img src={`/api/${fundraise.image}`} alt="IMAGE" />
+        <img src={`/api${fundraise.image}`} alt="IMAGE" />
       </div>
     </div>
   );

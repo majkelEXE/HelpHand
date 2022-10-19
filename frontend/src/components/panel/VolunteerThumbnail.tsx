@@ -24,7 +24,7 @@ const VolunteerThumbnail: FC<{
       </div>
 
       {!isMobile && (
-        <img src={`/api/${volunteer.image}`} className={css.image} />
+        <img src={`/api${volunteer.image}`} className={css.image} />
       )}
 
       <div
