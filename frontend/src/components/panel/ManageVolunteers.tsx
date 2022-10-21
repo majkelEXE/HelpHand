@@ -4,6 +4,7 @@ import { RiAddCircleFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
+import editVolunteerState from '../../atoms/editVolunteer';
 import syncState from '../../atoms/sync';
 import tokenState from '../../atoms/token';
 import userVolunteersState from '../../atoms/userVolunteers';
@@ -13,6 +14,7 @@ import VolunteerThumbnail from './VolunteerThumbnail';
 const ManageVolunteers = () => {
   const navigate = useNavigate();
   const [volunteers, setVolunteers] = useRecoilState(userVolunteersState);
+  const setEditVolunteer = useSetRecoilState(editVolunteerState);
   const token = useRecoilValue(tokenState);
   const setSync = useSetRecoilState(syncState);
 
@@ -24,6 +26,12 @@ const ManageVolunteers = () => {
     setSync(true);
   };
 
+  const editHandler = async (e: MouseEvent<HTMLElement>, id: number) => {
+    e.stopPropagation();
+    setEditVolunteer(volunteers.filter((v) => v.id == id)[0]);
+    navigate("/addvolunteer");
+  };
+
   return (
     <div className={css.manageContainer}>
       {volunteers.length > 0 ? (
@@ -32,6 +40,7 @@ const ManageVolunteers = () => {
             key={v.id}
             volunteer={v}
             deleteHandler={deleteHandler}
+            editHandler={editHandler}
           />
         ))
       ) : (

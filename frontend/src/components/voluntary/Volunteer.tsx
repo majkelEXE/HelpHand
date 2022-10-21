@@ -5,8 +5,10 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import applyDataState from '../../atoms/applyData';
+import errorSummaryState from '../../atoms/errorSummary';
 import modalComponentState from '../../atoms/modalComponent';
 import showModalState from '../../atoms/showModal';
+import tokenState from '../../atoms/token';
 import volunteersState from '../../atoms/volunteers';
 import css from './Volunteer.module.css';
 
@@ -19,17 +21,26 @@ const Volunteer = () => {
   const setShowModal = useSetRecoilState(showModalState);
   const setModalComponent = useSetRecoilState(modalComponentState);
   const setApplyData = useSetRecoilState(applyDataState);
+  const setErrorSummary = useSetRecoilState(errorSummaryState);
+  const token = useRecoilValue(tokenState);
 
   const isMobile = useMediaQuery({ query: "(max-width: 1000px)" });
 
   const applyHandler = () => {
-    setApplyData({
-      volunteer_role: volunteer.role,
-      addresser_email: volunteer.contact_email,
-      email_content: "",
-    });
-    setModalComponent("apply");
-    setShowModal(true);
+    if (token) {
+      setApplyData({
+        volunteer_role: volunteer.role,
+        addresser_email: volunteer.contact_email,
+        email_content: "",
+      });
+      setModalComponent("apply");
+      setShowModal(true);
+    } else {
+      setErrorSummary(["Aby aplikować musisz być zalogowany!"]);
+      setModalComponent("errorSummary");
+      setShowModal(true);
+    }
+
     // if (!hasApplied) {
     //   setIsLoading(true);
     //   loadingTimeout = setTimeout(() => {

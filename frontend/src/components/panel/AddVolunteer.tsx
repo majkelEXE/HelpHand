@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { RiAddCircleFill, RiDeleteBin2Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
+import editVolunteerState from '../../atoms/editVolunteer';
 import errorSummaryState from '../../atoms/errorSummary';
 import modalComponentState from '../../atoms/modalComponent';
 import showModalState from '../../atoms/showModal';
 import syncState from '../../atoms/sync';
+import textareaState from '../../atoms/textarea';
 import tokenState from '../../atoms/token';
 import css from './AddVolunteer.module.css';
 
@@ -15,27 +17,58 @@ const AddVolunteer = () => {
   const navigate = useNavigate();
   const setSync = useSetRecoilState(syncState);
 
+  const [editVolunteer, setEditVolunteer] = useRecoilState(editVolunteerState);
+  const [textarea, setTextarea] = useRecoilState(textareaState);
+
+  useEffect(() => {
+    if (textarea) {
+      if (textarea.field == "desc") {
+        setDescription(textarea.text);
+      } else if (textarea.field == "content") {
+        setContent(textarea.text);
+      }
+    }
+  }, [textarea]);
+
   const token = useRecoilValue(tokenState);
   const setShowModal = useSetRecoilState(showModalState);
   const setModalComponent = useSetRecoilState(modalComponentState);
   const setErrorSummary = useSetRecoilState(errorSummaryState);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [content, setContent] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState(editVolunteer ? editVolunteer.role : "");
+  const [description, setDescription] = useState(
+    editVolunteer ? editVolunteer.description : ""
+  );
+  const [content, setContent] = useState(
+    editVolunteer ? editVolunteer.content : ""
+  );
+  const [email, setEmail] = useState(
+    editVolunteer ? editVolunteer.contact_email : ""
+  );
+  const [phone, setPhone] = useState(
+    editVolunteer ? editVolunteer.contact_phone : ""
+  );
   const [image, setImage] = useState<{
     src: string;
     name: string;
     file: File | null;
   }>({
-    src: "/images/background.jpg",
+    src: editVolunteer
+      ? "api/" + editVolunteer.image
+      : "/images/background.jpg",
     name: "Wybierz zdjęcie",
     file: null,
   });
   const [requirement, setRequirement] = useState("");
-  const [requirements, setRequirements] = useState<string[]>([]);
+  const [requirements, setRequirements] = useState<string[]>(
+    editVolunteer ? editVolunteer.skills.map((s) => s.name) : []
+  );
+
+  useEffect(() => {
+    return () => {
+      setEditVolunteer(null);
+    };
+  }, []);
 
   const addRequirementHandler = () => {
     if (requirement) {
@@ -50,24 +83,45 @@ const AddVolunteer = () => {
 
   const addVolunteerHandler = async () => {
     try {
-      await axios.post(
-        "/api/volunteer",
-        {
-          contact_email: email,
-          contact_phone: phone,
-          content: content,
-          description: description,
-          image: image.file,
-          role: name,
-          skills: JSON.stringify(requirements),
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `token ${token}`,
+      if (editVolunteer) {
+        await axios.put(
+          "/api/volunteer",
+          {
+            contact_email: email,
+            contact_phone: phone,
+            content: content,
+            description: description,
+            image: image.file,
+            role: name,
+            skills: JSON.stringify(requirements),
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `token ${token}`,
+            },
+          }
+        );
+      } else {
+        await axios.post(
+          "/api/volunteer",
+          {
+            contact_email: email,
+            contact_phone: phone,
+            content: content,
+            description: description,
+            image: image.file,
+            role: name,
+            skills: JSON.stringify(requirements),
+          },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `token ${token}`,
+            },
+          }
+        );
+      }
 
       setSync(true);
       navigate("/managevolunteers");
@@ -95,6 +149,12 @@ const AddVolunteer = () => {
         file: e.target.files[0],
       });
     }
+  };
+
+  const textareaHandler = (field: string, text: string) => {
+    setTextarea({ field, text });
+    setModalComponent("textarea");
+    setShowModal(true);
   };
 
   return (
@@ -129,6 +189,7 @@ const AddVolunteer = () => {
             className="textInput"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            onClick={() => textareaHandler("desc", description)}
           />
           <h1>Zawartość</h1>
           <input
@@ -136,6 +197,7 @@ const AddVolunteer = () => {
             className="textInput"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            onClick={() => textareaHandler("content", content)}
           />
           <h1>Email</h1>
           <input
@@ -169,7 +231,7 @@ const AddVolunteer = () => {
           />
           <div className={css.requirements}>
             {requirements.map((r, i) => (
-              <div className={css.requirement}>
+              <div className={css.requirement} key={i}>
                 <p>{r}</p>
                 <RiDeleteBin2Fill onClick={() => deleteRequirementHandler(i)} />
               </div>
@@ -181,7 +243,7 @@ const AddVolunteer = () => {
         className={`bigPrimaryButton ${css.add}`}
         onClick={addVolunteerHandler}
       >
-        Dodaj
+        {editVolunteer ? "Edytuj" : "Dodaj"}
       </div>
     </div>
   );

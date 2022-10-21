@@ -2,15 +2,17 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import axios from 'axios';
 import maplibreGl from 'maplibre-gl';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Map, Marker, NavigationControl, ViewStateChangeEvent } from 'react-map-gl';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
+import editFundraiseState from '../../atoms/editFundraise';
 import errorSummaryState from '../../atoms/errorSummary';
 import modalComponentState from '../../atoms/modalComponent';
 import showModalState from '../../atoms/showModal';
 import syncState from '../../atoms/sync';
+import textareaState from '../../atoms/textarea';
 import tokenState from '../../atoms/token';
 import volunteersState from '../../atoms/volunteers';
 import Location from '../../models/Location';
@@ -18,28 +20,61 @@ import css from './AddFundraise.module.css';
 
 const AddFundraise = () => {
   const navigate = useNavigate();
+  const [editFundraise, setEditFundraise] = useRecoilState(editFundraiseState);
+  const [textarea, setTextarea] = useRecoilState(textareaState);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [content, setContent] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  useEffect(() => {
+    if (textarea) {
+      if (textarea.field == "desc") {
+        setDescription(textarea.text);
+      } else if (textarea.field == "content") {
+        setContent(textarea.text);
+      }
+    }
+  }, [textarea]);
+
+  const [name, setName] = useState(editFundraise ? editFundraise.name : "");
+  const [description, setDescription] = useState(
+    editFundraise ? editFundraise.description : ""
+  );
+  const [content, setContent] = useState(
+    editFundraise ? editFundraise.content : ""
+  );
+  const [email, setEmail] = useState(
+    editFundraise ? editFundraise.contact_email : ""
+  );
+  const [phone, setPhone] = useState(
+    editFundraise ? editFundraise.contact_phone : ""
+  );
   const [image, setImage] = useState<{
     src: string;
     name: string;
     file: File | null;
   }>({
-    src: "/images/background.jpg",
+    src: editFundraise
+      ? "api/" + editFundraise.image
+      : "/images/background.jpg",
     name: "Wybierz zdjęcie",
     file: null,
   });
 
-  const [date, setDate] = useState("");
-  const [location, setLocation] = useState<Location>();
-  const [selectedVolunteers, setSelectedVolunteers] = useState<number[]>([]);
+  const [date, setDate] = useState(
+    editFundraise ? editFundraise.date.toString().slice(0, -4) : ""
+  );
+  const [location, setLocation] = useState<Location | null>(
+    editFundraise ? editFundraise.location : null
+  );
+
+  const [selectedVolunteers, setSelectedVolunteers] = useState<number[]>(
+    editFundraise ? editFundraise.volunteers.map((v) => v.id) : []
+  );
   const [searchQuery, setSearchQuery] = useState("");
-  const [latitude, setLatitude] = useState(50.049683);
-  const [longitude, setLongitude] = useState(19.944544);
+  const [latitude, setLatitude] = useState(
+    editFundraise ? editFundraise.location.latitude : 50.049683
+  );
+  const [longitude, setLongitude] = useState(
+    editFundraise ? editFundraise.location.longtitude : 19.944544
+  );
   const [zoom, setZoom] = useState(11);
 
   const volunteers = useRecoilValue(volunteersState);
@@ -48,6 +83,12 @@ const AddFundraise = () => {
   const setShowModal = useSetRecoilState(showModalState);
   const setModalComponent = useSetRecoilState(modalComponentState);
   const setErrorSummary = useSetRecoilState(errorSummaryState);
+
+  useEffect(() => {
+    return () => {
+      setEditFundraise(null);
+    };
+  }, []);
 
   const imageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -60,27 +101,51 @@ const AddFundraise = () => {
   };
 
   const addFundraiseHandler = async () => {
+    console.log(date);
     try {
-      await axios.post(
-        "/api/fundraiser",
-        {
-          image: image.file,
-          name: name,
-          description: description,
-          date: date,
-          content: content,
-          contact_email: email,
-          contact_phone: phone,
-          location: JSON.stringify(location),
-          volunteers: JSON.stringify(selectedVolunteers),
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `token ${token}`,
+      if (editFundraise) {
+        await axios.put(
+          "/api/fundraiser",
+          {
+            image: image.file,
+            name: name,
+            description: description,
+            date: date,
+            content: content,
+            contact_email: email,
+            contact_phone: phone,
+            location: JSON.stringify(location),
+            volunteers: JSON.stringify(selectedVolunteers),
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `token ${token}`,
+            },
+          }
+        );
+      } else {
+        await axios.post(
+          "/api/fundraiser",
+          {
+            image: image.file,
+            name: name,
+            description: description,
+            date: date,
+            content: content,
+            contact_email: email,
+            contact_phone: phone,
+            location: JSON.stringify(location),
+            volunteers: JSON.stringify(selectedVolunteers),
+          },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `token ${token}`,
+            },
+          }
+        );
+      }
 
       setSync(true);
       navigate("/managefundraises");
@@ -153,6 +218,12 @@ const AddFundraise = () => {
     setZoom(e.viewState.zoom);
   };
 
+  const textareaHandler = (field: string, text: string) => {
+    setTextarea({ field, text });
+    setModalComponent("textarea");
+    setShowModal(true);
+  };
+
   return (
     <div className={css.addFundraiseContainer}>
       <div className={css.formContainer}>
@@ -185,6 +256,7 @@ const AddFundraise = () => {
             className="textInput"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            onClick={() => textareaHandler("desc", description)}
           />
           <h1>Zawartość</h1>
           <input
@@ -192,6 +264,7 @@ const AddFundraise = () => {
             className="textInput"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            onClick={() => textareaHandler("content", content)}
           />
           <h1>Email</h1>
           <input
@@ -332,7 +405,7 @@ const AddFundraise = () => {
         className={`bigPrimaryButton ${css.add}`}
         onClick={addFundraiseHandler}
       >
-        Dodaj
+        {editFundraise ? "Edytuj" : "Dodaj"}
       </div>
     </div>
   );

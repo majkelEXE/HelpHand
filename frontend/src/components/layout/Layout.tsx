@@ -13,6 +13,7 @@ import css from './Layout.module.css';
 import Modal from './Modal';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import Textarea from './Textarea';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const [showSideBar, setShowSideBar] = useState(false);
@@ -29,6 +30,8 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         return <ErrorSummary />;
       case "apply":
         return <Apply />;
+      case "textarea":
+        return <Textarea />;
       default:
         return <div></div>;
     }

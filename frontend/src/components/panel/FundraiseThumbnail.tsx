@@ -1,5 +1,5 @@
 import { FC, MouseEvent } from 'react';
-import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,8 @@ import css from './FundraiseThumbnail.module.css';
 const FundraiseThumbnail: FC<{
   fundraise: fundraiseModel;
   deleteHandler: (e: MouseEvent<HTMLElement>, id: number) => void;
-}> = ({ fundraise, deleteHandler }) => {
+  editHandler: (e: MouseEvent<HTMLElement>, id: number) => void;
+}> = ({ fundraise, deleteHandler, editHandler }) => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
   return (
@@ -26,11 +27,13 @@ const FundraiseThumbnail: FC<{
       {!isMobile && (
         <img src={`/api${fundraise.image}`} className={css.image} />
       )}
-      <div
-        className={css.thumbnailAction}
-        onClick={(e) => deleteHandler(e, fundraise.id)}
-      >
-        <RiDeleteBin2Fill />
+      <div className={css.thumbnailAction}>
+        <div onClick={(e) => editHandler(e, fundraise.id)}>
+          <RiEdit2Fill />
+        </div>
+        <div onClick={(e) => deleteHandler(e, fundraise.id)}>
+          <RiDeleteBin2Fill />
+        </div>
       </div>
     </div>
   );

@@ -8,8 +8,8 @@ const ErrorSummary = () => {
 
   return (
     <div className={css.errorSummaryContainer}>
-      {errorSummary.map((e) => (
-        <p>{e}</p>
+      {errorSummary.map((e, i) => (
+        <p key={i}>{e}</p>
       ))}
     </div>
   );
