@@ -46,9 +46,26 @@
 .panelContainer > div > h1,
 .mobilePanelContainer > div > h1 {
   color: var(--textColor);
-  font-size: 2.5vw;
   position: absolute;
   top: 5%;
+  transition: 0.2s;
+}
+
+.panelContainer > div > h1 {
+  font-size: 40px;
+}
+
+.mobilePanelContainer > div > h1 {
+  font-size: 30px;
+}
+
+.panelContainer > div:hover > h1 {
+  font-size: 50px;
+  transition: 0.2s;
+}
+
+.mobilePanelContainer > div:hover > h1 {
+  font-size: 40px;
   transition: 0.2s;
 }
 
@@ -63,5 +80,4 @@
 .mobilePanelContainer > div:hover > h1 {
   color: var(--darkMainColor);
   transition: 0.2s;
-  font-size: 2.8vw;
 }

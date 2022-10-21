@@ -1,7 +1,12 @@
+import { useState } from 'react';
+import { RiRefreshLine } from 'react-icons/ri';
 import { useMediaQuery } from 'react-responsive';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import applyDataState from '../../atoms/applyData';
+import modalComponentState from '../../atoms/modalComponent';
+import showModalState from '../../atoms/showModal';
 import volunteersState from '../../atoms/volunteers';
 import css from './Volunteer.module.css';
 
@@ -9,8 +14,30 @@ const Volunteer = () => {
   const { id } = useParams();
   const volunteers = useRecoilValue(volunteersState);
   const volunteer = volunteers.filter((v) => v.id == parseInt(id ?? ""))[0];
+  const [hasApplied, setHasApplies] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const setShowModal = useSetRecoilState(showModalState);
+  const setModalComponent = useSetRecoilState(modalComponentState);
+  const setApplyData = useSetRecoilState(applyDataState);
 
   const isMobile = useMediaQuery({ query: "(max-width: 1000px)" });
+
+  const applyHandler = () => {
+    setApplyData({
+      volunteer_role: volunteer.role,
+      addresser_email: volunteer.contact_email,
+      email_content: "",
+    });
+    setModalComponent("apply");
+    setShowModal(true);
+    // if (!hasApplied) {
+    //   setIsLoading(true);
+    //   loadingTimeout = setTimeout(() => {
+    //     setIsLoading(false);
+    //     setHasApplies(true);
+    //   }, 3000);
+    // }
+  };
 
   return (
     <div
@@ -27,6 +54,17 @@ const Volunteer = () => {
           {volunteer.skills.map((r) => (
             <p key={r.name}>- {r.name}</p>
           ))}
+        </div>
+        <div className={css.aplication}>
+          <div
+            className={`bigPrimaryButton ${hasApplied ? css.slideOut : ""}`}
+            onClick={applyHandler}
+          >
+            {hasApplied
+              ? "Gratulacje! Twoja aplikacja została wysłana!"
+              : "Aplikuj"}
+          </div>
+          {isLoading && <RiRefreshLine className={css.spin} />}
         </div>
         <h2>Kontakt</h2>
         <a href={`mailto:${volunteer.contact_email}`}>

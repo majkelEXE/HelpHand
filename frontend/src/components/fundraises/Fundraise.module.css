@@ -68,6 +68,14 @@
   margin-top: 25px;
 }
 
+.neededVolunteers > a {
+  margin-bottom: 10px;
+}
+
+.neededVolunteers > a:last-of-type {
+  margin-bottom: 0;
+}
+
 .location {
   margin: 25px 0;
 }

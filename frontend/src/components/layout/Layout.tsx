@@ -7,6 +7,7 @@ import modalComponentState from '../../atoms/modalComponent';
 import showModalState from '../../atoms/showModal';
 import Login from '../account/Login';
 import Register from '../account/Register';
+import Apply from '../voluntary/Apply';
 import ErrorSummary from './ErrorSummary';
 import css from './Layout.module.css';
 import Modal from './Modal';
@@ -26,6 +27,8 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         return <Register />;
       case "errorSummary":
         return <ErrorSummary />;
+      case "apply":
+        return <Apply />;
       default:
         return <div></div>;
     }
@@ -51,7 +54,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         >
           <Sidebar setShowSideBar={setShowSideBar} />
         </CSSTransition>
-        <div>{children}</div>
+        <div onClick={() => setShowSideBar(false)}>{children}</div>
       </div>
       {showModal && <Modal>{renderModalComponent()}</Modal>}
     </>

@@ -1,0 +1,84 @@
+.quizContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.quizContainer h1 {
+  color: var(--textColor);
+  width: 100%;
+  font-weight: normal;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.mobileQuizContainer h1 {
+  font-size: 20px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--backgroundColor);
+  padding: 30px;
+  border-radius: 7px;
+  position: fixed;
+  bottom: 30px;
+}
+
+.indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.indicator > span {
+  width: 10px;
+  height: 10px;
+  background-color: var(--darkBackgroundColor);
+  border-radius: 50%;
+}
+
+.current {
+  background-color: var(--textColor) !important;
+}
+
+.quesitons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 500px;
+}
+
+.quesitons > div {
+  width: 500px;
+  margin-bottom: 10px;
+}
+
+.quesitons span {
+  font-weight: bold;
+}
+
+.mobileQuestions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.mobileQuestions > div {
+  width: 100%;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.mobileQuestions span {
+  font-weight: bold;
+}

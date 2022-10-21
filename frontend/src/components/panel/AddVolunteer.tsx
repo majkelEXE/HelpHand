@@ -146,6 +146,7 @@ const AddVolunteer = () => {
           />
           <h1>Telefon</h1>
           <input
+            placeholder="+48 111 222 333"
             type="tel"
             className="textInput"
             value={phone}

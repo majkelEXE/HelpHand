@@ -57,9 +57,13 @@ const Login = () => {
     }
   };
 
+  const resetHandler = () => {
+    setError("Sprawdź maila!");
+  };
+
   return (
     <div className={css.loginContainer}>
-      <h1>Login</h1>
+      <h1>Zaloguj się</h1>
       <div>
         <label>Email</label>
         <input
@@ -72,7 +76,7 @@ const Login = () => {
         />
       </div>
       <div>
-        <label>Password</label>
+        <label>Hasło</label>
         <input
           type="password"
           className="textInput"
@@ -83,8 +87,11 @@ const Login = () => {
         />
       </div>
       <div className="bigPrimaryButton" onClick={loginHandler}>
-        Login
+        Zaloguj
       </div>
+      <p className={css.reset} onClick={resetHandler}>
+        Zapomniałem hasła
+      </p>
       <p className={css.error}>{error}</p>
     </div>
   );

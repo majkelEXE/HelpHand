@@ -24,3 +24,14 @@
   white-space: pre-line;
   text-align: center;
 }
+
+.reset {
+  color: var(--textColor);
+  font-weight: bold;
+  margin: 0;
+  margin-top: 15px;
+}
+
+.reset:hover {
+  cursor: pointer;
+}

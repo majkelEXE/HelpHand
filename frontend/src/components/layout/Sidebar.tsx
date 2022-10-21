@@ -18,6 +18,15 @@ const Sidebar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
         Zbiórki
       </Link>
       <Link
+        to={"/voluntary"}
+        className={`${css.link} ${
+          location.pathname == "/voluntary" ? css.current : ""
+        }`}
+        onClick={() => setShowSideBar(false)}
+      >
+        Wolontariaty
+      </Link>
+      <Link
         to={"/map"}
         className={`${css.link} ${
           location.pathname == "/map" ? css.current : ""
@@ -27,13 +36,13 @@ const Sidebar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
         Mapa Zbiórek
       </Link>
       <Link
-        to={"/voluntary"}
+        to={"/knowledge"}
         className={`${css.link} ${
-          location.pathname == "/voluntary" ? css.current : ""
+          location.pathname == "/knowledge" ? css.current : ""
         }`}
         onClick={() => setShowSideBar(false)}
       >
-        Wolontariaty
+        Edukacja
       </Link>
     </div>
   );

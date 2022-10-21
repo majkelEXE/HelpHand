@@ -106,7 +106,7 @@ const AddFundraise = () => {
   const mapClickHandler = async (e: mapboxgl.MapLayerMouseEvent) => {
     let data = (
       await axios.get(
-        `https://api.geoapify.com/v1/geocode/reverse?lat=${e.lngLat.lat}&lon=${e.lngLat.lng}&apiKey=${process.env.REACT_APP_GEOAPIFY_API_KEY}`
+        `https://api.geoapify.com/v1/geocode/reverse?lat=${e.lngLat.lat}&lon=${e.lngLat.lng}&lang=pl&apiKey=${process.env.REACT_APP_GEOAPIFY_API_KEY}`
       )
     ).data;
 
@@ -202,6 +202,7 @@ const AddFundraise = () => {
           />
           <h1>Telefon</h1>
           <input
+            placeholder="+48 111 222 333"
             type="tel"
             className="textInput"
             value={phone}
@@ -236,7 +237,7 @@ const AddFundraise = () => {
               latitude={latitude}
               longitude={longitude}
               zoom={zoom}
-              style={{ width: "400px", height: "250px", borderRadius: "7px" }}
+              style={{ width: "100%", height: "250px", borderRadius: "7px" }}
               mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${process.env.REACT_APP_MAPTILER_API_KEY}`}
               onClick={mapClickHandler}
               onDrag={dragHandler}

@@ -1,0 +1,60 @@
+.classContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.classContainer > h1 {
+  color: var(--textColor);
+  width: 75%;
+  font-weight: normal;
+  margin-bottom: 30px;
+}
+
+.classContainer > h1 > span {
+  font-weight: bold;
+}
+
+.mobileClassContainer > h1 {
+  font-size: 16px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--backgroundColor);
+  padding: 30px;
+  border-radius: 7px;
+  position: fixed;
+  bottom: 30px;
+}
+
+.indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 5px;
+}
+
+.indicator > span {
+  width: 10px;
+  height: 10px;
+  background-color: var(--darkBackgroundColor);
+  border-radius: 50%;
+}
+
+.current {
+  background-color: var(--textColor) !important;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}

@@ -1,12 +1,13 @@
 import './index.css';
 
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
+import ResetPassword from './components/account/ResetPassword';
 import Fundraise from './components/fundraises/Fundraise';
 import Fundraises from './components/fundraises/Fundraises';
+import Knowledge from './components/knowledge/Knowledge';
 import Layout from './components/layout/Layout';
 import FundraisesMap from './components/map/FundraisesMap';
 import AddFundraise from './components/panel/AddFundraise';
@@ -17,6 +18,7 @@ import Panel from './components/panel/Panel';
 import Voluntary from './components/voluntary/Voluntary';
 import Volunteer from './components/voluntary/Volunteer';
 import AtomsProvider from './providers/AtomsProvider';
+import Guard from './routes/Guard';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +41,9 @@ const router = createBrowserRouter([
     path: "/panel",
     element: (
       <Layout>
-        <Panel />
+        <Guard>
+          <Panel />
+        </Guard>
       </Layout>
     ),
   },
@@ -47,7 +51,9 @@ const router = createBrowserRouter([
     path: "/addvolunteer",
     element: (
       <Layout>
-        <AddVolunteer />
+        <Guard>
+          <AddVolunteer />
+        </Guard>
       </Layout>
     ),
   },
@@ -55,7 +61,9 @@ const router = createBrowserRouter([
     path: "/addfundraise",
     element: (
       <Layout>
-        <AddFundraise />
+        <Guard>
+          <AddFundraise />
+        </Guard>
       </Layout>
     ),
   },
@@ -63,7 +71,9 @@ const router = createBrowserRouter([
     path: "/managevolunteers",
     element: (
       <Layout>
-        <ManageVolunteers />
+        <Guard>
+          <ManageVolunteers />
+        </Guard>
       </Layout>
     ),
   },
@@ -71,7 +81,9 @@ const router = createBrowserRouter([
     path: "/managefundraises",
     element: (
       <Layout>
-        <ManageFundraises />
+        <Guard>
+          <ManageFundraises />
+        </Guard>
       </Layout>
     ),
   },
@@ -99,6 +111,22 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  {
+    path: "/knowledge",
+    element: (
+      <Layout>
+        <Knowledge />
+      </Layout>
+    ),
+  },
+  {
+    path: "/reset",
+    element: (
+      <Layout>
+        <ResetPassword />
+      </Layout>
+    ),
+  },
 ]);
 
 const root = ReactDOM.createRoot(
@@ -106,11 +134,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <AtomsProvider>
-        <RouterProvider router={router} />
-      </AtomsProvider>
-    </RecoilRoot>
-  </React.StrictMode>
+  <RecoilRoot>
+    <AtomsProvider>
+      <RouterProvider router={router} />
+    </AtomsProvider>
+  </RecoilRoot>
 );

@@ -9,12 +9,14 @@ const Modal: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div className={css.background}>
-      {children}
-      <div
-        className={`bigSecondaryButton ${css.cancel}`}
-        onClick={() => setShowModal(false)}
-      >
-        Zamknij
+      <div className={css.scrollContainer}>
+        {children}
+        <div
+          className={`bigSecondaryButton ${css.cancel}`}
+          onClick={() => setShowModal(false)}
+        >
+          Zamknij
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 
 import volunteerModel from '../../models/Volunteer';
@@ -6,6 +7,7 @@ import css from './VolunteerCard.module.css';
 
 const VolunteerCard: FC<{ volunteer: volunteerModel }> = ({ volunteer }) => {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
 
   return (
     <div
@@ -23,9 +25,11 @@ const VolunteerCard: FC<{ volunteer: volunteerModel }> = ({ volunteer }) => {
           ))}
         </div>
       </div>
-      <div className={css.imageContainer}>
-        <img src={`/api${volunteer.image}`} alt="IMAGE" />
-      </div>
+      {!isMobile && (
+        <div className={css.imageContainer}>
+          <img src={`/api${volunteer.image}`} alt="IMAGE" />
+        </div>
+      )}
     </div>
   );
 };

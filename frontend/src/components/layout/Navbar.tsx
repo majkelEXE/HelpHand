@@ -24,10 +24,9 @@ const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
 
   return (
     <div className={css.navbarContainer}>
-      <RiMenuFill
-        className={css.menu}
-        onClick={() => setShowSideBar((prevState) => !prevState)}
-      />
+      <div className={css.menu}>
+        <RiMenuFill onClick={() => setShowSideBar((prevState) => !prevState)} />
+      </div>
 
       <div className={css.logo} onClick={() => navigate("/")}>
         {!isMobile && (
@@ -49,7 +48,7 @@ const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
                 setShowModal(true);
               }}
             >
-              SignIn
+              Zarejestruj
             </div>
             <div
               className={"primaryButton"}
@@ -58,7 +57,7 @@ const Navbar: FC<{ setShowSideBar: Dispatch<SetStateAction<boolean>> }> = ({
                 setShowModal(true);
               }}
             >
-              LogIn
+              Zaloguj
             </div>
           </>
         ) : (

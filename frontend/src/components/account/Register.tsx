@@ -86,7 +86,7 @@ const Register = () => {
 
   return (
     <div className={css.registerContainer}>
-      <h1>Register</h1>
+      <h1>Zarejestruj</h1>
 
       <div>
         <div>
@@ -139,6 +139,7 @@ const Register = () => {
           <div>
             <label>Telefon</label>
             <input
+              placeholder="+48 111 222 333"
               type="tel"
               className="textInput"
               value={phone}
@@ -175,7 +176,7 @@ const Register = () => {
         </div>
       </div>
       <div className="bigPrimaryButton" onClick={registerHandler}>
-        Register
+        Zarejestruj
       </div>
       <p className={css.error}>{error}</p>
     </div>

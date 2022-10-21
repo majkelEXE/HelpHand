@@ -12,7 +12,9 @@
 
 .menu {
   display: flex;
-  padding-right: 127px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 200px;
   margin-right: auto;
   color: var(--textColor);
   font-size: 30px;

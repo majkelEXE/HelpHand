@@ -1,0 +1,29 @@
+.knowledgeContainer {
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--textColor);
+}
+
+.knowledgeContainer > h1 {
+  font-size: 50px;
+  width: 75%;
+  text-align: center;
+}
+
+.mobileKnowledgeContainer {
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--textColor);
+}
+
+.mobileKnowledgeContainer > h1 {
+  font-size: 30px;
+  width: 75%;
+  text-align: center;
+}
