@@ -14,16 +14,10 @@ const ResetPassword = () => {
   const resetHandler = async () => {
     if (newPassword == repeatedNewPassword) {
       try {
-        await axios.post(
-          "/api/fundraiser",
-          {},
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `token ${searchParams.get("token")}`,
-            },
-          }
-        );
+        await axios.post("/api/password_reset/confirm/", {
+          token: searchParams.get("token"),
+          password: newPassword,
+        });
 
         navigate("/");
       } catch (e) {

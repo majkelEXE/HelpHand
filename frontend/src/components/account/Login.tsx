@@ -57,8 +57,18 @@ const Login = () => {
     }
   };
 
-  const resetHandler = () => {
-    setError("Sprawdź maila!");
+  const resetHandler = async () => {
+    if (email) {
+      let res = await axios.post("api/password_reset/", { email: email });
+
+      if (res.data.status == "OK") {
+        setError("Sprawdź maila!");
+      } else {
+        setError("Coś poszło nie tak");
+      }
+    } else {
+      setError("Podaj maila!");
+    }
   };
 
   return (

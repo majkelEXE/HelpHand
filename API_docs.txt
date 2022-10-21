@@ -282,7 +282,7 @@ response(user is able to log in with the new password):
     "status": "OK"
 }
 ------------------------------------------------------------
-api/report_volunteer
+/api/report_volunteer
 ==>POST(send mail to the person who created volunteer_advert)
 header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
 request
