@@ -29,6 +29,7 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_id = self.context.get("user_id")
+        print(user_id)
         skills_data = json.loads(self.context.get("skills_to_add"))
         volunteer_advert = VolunteerAdvert.objects.create(**validated_data, created_by=user_id)
         for skill in skills_data:
