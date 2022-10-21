@@ -114,7 +114,7 @@ class FundraiserDetail(APIView):
         elif fundraiser.created_by != user_id:
             return Response(data={'error':'Access denied. Cannot delete other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-        serializer = FundraiserSerializer(fundraiser, data=request.data, context={'location': request.data["location"], 'volunteers': request.data["volunteers"], "user_id": request.user.id})
+        serializer = FundraiserSerializer(fundraiser, data=request.data, context={'location': request.data["location"], 'volunteers': request.data["volunteers"]})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -141,7 +141,7 @@ class VolunteerAdvertView(APIView):
         if not token:
             return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        volunteer_advert_serializer = VolunteerAdvertSerializer(data=request.data,context={'skills_to_add': request.data["skills"]})
+        volunteer_advert_serializer = VolunteerAdvertSerializer(data=request.data,context={'skills_to_add': request.data["skills"], "user_id": request.user.id})
 
         if volunteer_advert_serializer.is_valid():
             volunteer = volunteer_advert_serializer.save()
