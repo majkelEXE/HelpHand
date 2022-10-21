@@ -36,6 +36,17 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
             volunteer_advert.skills.add(skill_obj)
 
         return volunteer_advert
+
+    def update(self, instance, validated_data):
+        skills_data = json.loads(self.context.get("skills_to_add"))
+        VolunteerAdvert.objects.filter(id=instance.id).update(**validated_data)
+
+        instance.skills.all().delete()
+        for skill in skills_data:
+            skill_obj, _ = Skill.objects.get_or_create(name=skill)
+            instance.skills.add(skill_obj)
+
+        return instance
     
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,3 +72,26 @@ class FundraiserSerializer(serializers.ModelSerializer):
             volunteer_obj.fundraiser = fundraiser
             volunteer_obj.save()
         return fundraiser
+
+    def update(self, instance, validated_data):
+        location = json.loads(self.context.get("location"))
+        volunteers = json.loads(self.context.get("volunteers"))
+        location_obj = instance.location
+
+        Location.objects.filter(id=location_obj.id).update(**location)
+        Fundraiser.objects.filter(id=instance.id).update(**validated_data)
+
+        for volunteer in instance.volunteers.all():
+            if volunteer.id not in volunteers:
+                volunteer.fundraiser = None
+                volunteer.save()
+            else:
+                volunteers.remove(volunteer.id)
+
+        for volunteer_id in volunteers:
+            volunteer_obj = VolunteerAdvert.objects.get(id=volunteer_id)
+            volunteer_obj.fundraiser = instance
+            volunteer_obj.save()
+
+        return instance
+
