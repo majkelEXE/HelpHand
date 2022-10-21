@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        background-color: #e0dcdc;
+        font-size: 16px;
+        padding: 3% 10%;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+      }
+
+      #header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      #content {
+        background-color: #fffbfb;
+        border-radius: 20px;
+        padding: 3% 10%;
+      }
+
+      #report {
+        background-color: #fde4e4;
+        border-radius: 20px;
+        padding: 3% 10%;
+      }
+
+      #addresser_contact span {
+        font-weight: bold;
+      }
+
+      #greetings {
+        margin-top: 40px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div id="header">
+        <h1><span style="color: #e30613">Help</span>Hand</h1>
+        <img src="cid:helphand" alt="logo image" width="80px" height="80px" />
+      </div>
+      <h2>Witaj {{ current_user.first_name }}!</h2>
+      <p>
+        Pojawiło się nowe zgłoszenie dla {{ volunteer_role }}. Poniżej znajduje
+        się jego treść.
+      </p>
+      <div id="report">
+        <p>{{ email_content }}</p>
+        <hr />
+        <p id="addresser_contact">
+          Dane kontaktowe:<br />
+          Email: <span>{{ current_user.email }}</span><br />
+          Telefon: <span>{{ current_user.phone_number }}</span>
+        </p>
+      </div>
+
+      <p style="margin-top: 10px; font-size: 13px">
+        Jeśli powyższe zgłoszenie spełnia twoje oczekiwania skontaktuj się z
+        jego nadawcą za pośrednictwem podanego adresu email, bądź numeru
+        telefonu.
+      </p>
+
+      <p id="greetings">
+        Pozdrawiamy,<br />
+        HelpHand App Team
+      </p>
+    </div>
+  </body>
+</html>

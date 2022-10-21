@@ -6,8 +6,6 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
 from phonenumber_field.modelfields import PhoneNumberField
 from rest_framework.authtoken.models import Token
 
-
-
 # Create your models here.
 class UserManager(BaseUserManager):
     use_in_migrations = True

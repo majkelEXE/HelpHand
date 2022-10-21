@@ -10,7 +10,8 @@ from .views import (
     VolunteerAdvertDetail,
     FundraiserView,
     FundraiserDetail,
-    UserEntitiesViewSet
+    UserEntitiesViewSet,
+    ReportVolunteer
 )
 
 router = routers.DefaultRouter()
@@ -24,6 +25,7 @@ urlpatterns = [
     path('fundraiser', FundraiserView.as_view()),  
     path('fundraiser/<int:pk>', FundraiserDetail.as_view()),  
     path('volunteer/<int:pk>', VolunteerAdvertDetail.as_view()),  
+    path('report_volunteer', ReportVolunteer.as_view()),  
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

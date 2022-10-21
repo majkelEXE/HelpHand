@@ -9,7 +9,14 @@ from rest_framework import status, viewsets
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import action
 
+from django.conf import settings
 
+import helphand.helpers
+
+from django.core.mail import EmailMultiAlternatives
+from django.dispatch import receiver
+from django.template.loader import render_to_string
+from django.urls import reverse
 
 from .serializers import UserSerializer, VolunteerAdvertSerializer, FundraiserSerializer
 from .models import Fundraiser, User, VolunteerAdvert
@@ -194,3 +201,44 @@ class UserEntitiesViewSet(viewsets.ModelViewSet):
             return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
         volunteers = VolunteerAdvert.objects.filter(created_by=request.user.id)
         return Response(VolunteerAdvertSerializer(volunteers, many=True).data, status=status.HTTP_200_OK)         
+
+
+class ReportVolunteer(APIView):
+    authentication_classes = (TokenAuthentication,)
+
+    def post(self, request):
+        token = request.headers.get("Authorization")
+        if not token:
+            return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        user = User.objects.get(id=request.user.id)#person who applies for(Sender)
+        addresser_email = request.data.get("addresser_email")#person who created the volunteer advert
+        volunteer_role = request.data.get("volunteer_role")
+        email_content = request.data.get("email_content")
+        
+        context = {
+            'current_user': user,
+            'volunteer_role': volunteer_role,
+            'email_content': email_content
+        }
+
+        email_html_message = render_to_string('email/report_volunteer.html', context)
+        email_plaintext_message = render_to_string('email/report_volunteer.txt', context)
+
+        msg = EmailMultiAlternatives(
+            # title:
+            "Pojawiło się nowe zgłoszenie dla {title}".format(title=volunteer_role),
+            # message:
+            email_plaintext_message,
+            # from:
+            settings.EMAIL_HOST_USER,
+            # to:
+            [addresser_email]
+        )
+        msg.attach_alternative(email_html_message, "text/html")
+        msg.attach(helphand.helpers.logo_helphand())
+
+        msg.send()
+        return Response(data={'status':'OK'}, status=status.HTTP_200_OK)         
+
+    
