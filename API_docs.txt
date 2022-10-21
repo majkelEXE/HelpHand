@@ -244,7 +244,7 @@ header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
 /api/fundraiser/:pk 
 ==>GET(get selected entity)
 
-==>DELTE(delete selected entity)
+==>DELETE(delete selected entity)
 header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
 
 ------------------------------------------------------------
@@ -252,4 +252,46 @@ header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
 ==>GET(get selected entity)
 
 ==>DELTE(delete selected entity)
-header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
+------------------------------------------------------------
+api/password_reset/
+==>POST(send email to get special token for changing password)
+request:
+{
+    "email": "test@test.pl"
+}
+response(email with access to token should be sent):
+{
+    "status": "OK"
+}
+
+IMPORTANT!!!
+The token will appear in the url and has to be sent with the new password
+You can get on email link e.g. http://localhost:3000/?token=b19096802bc4d89d90e8
+------------------------------------------------------------
+/api/password_reset/confirm/
+==>POST(set new password)
+request:
+{
+    token:"3d82af2f48605dbac859925857d5ce111c2e"//from url
+    password:"!@#$%^&*"
+
+}
+response(user is able to log in with the new password):
+{
+    "status": "OK"
+}
+------------------------------------------------------------
+api/report_volunteer
+==>POST(send mail to the person who created volunteer_advert)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
+request
+{
+    addresser_email="michal.dubrowski@wp.pl"//email to the person who created the advert, to this email the message will be sent
+    volunteer_role="tłumacz języka migowego"//role from the advert
+    email_content="..."//it is the content of the mail( Allow user to form the mail and the display using tabs and spaces)
+}
+response(mail is sent):
+{
+    "status": "OK"
+}
