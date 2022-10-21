@@ -5,4 +5,5 @@ __pycache__/
 
 .venv/
 media/
-.env
+frontend/.env
+backend/backend/.env
