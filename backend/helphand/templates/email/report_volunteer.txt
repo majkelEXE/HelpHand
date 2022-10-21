@@ -1,0 +1,11 @@
+HelpHand
+
+Witaj {{ current_user.first_name }}!
+
+Pojawiło się nowe zgłoszenie dla {{ volunteer_role }}. Poniżej znajduje się jego treść.
+
+{{ email_content }}
+
+Dane kontaktowe:
+Email: {{ urrent_user.email }}<br />
+Telefon: {{ urrent_user.phone_number }}
