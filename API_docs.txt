@@ -244,12 +244,44 @@ header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
 /api/fundraiser/:pk 
 ==>GET(get selected entity)
 
+==>PUT(update selected entity)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
+request
+{
+    image: @'test.jpg' 
+    name: 'ZMIANA'
+    description: 'ZMIANA'
+    date: '2022-07-07 13:32:31'
+    content: 'ZMIANA'
+    contact_email: 'ZMIANA@test.pl' 
+    contact_phone: "+48133259999" 
+    location: '{\"name\":\"Dobre\",\"latitude\":\"99999\",\"longtitude\":\"99999\"}' czyli JSON.stringify({"name":"Dobre","latitude":"99999","longtitude":"99999"})
+    volunteers='[1,2]' 
+}
+response:
+-updated object, output is the same as get, so it returns whole object with dependencies(volunteers and location)
+
 ==>DELETE(delete selected entity)
 header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0" 
 
 ------------------------------------------------------------
 /api/volunteer/:pk 
 ==>GET(get selected entity)
+
+==>PUT(update selected entity)
+header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
+request
+{
+    image: @'test.jpg' 
+    role: 'ZMIANA' 
+    content: 'rola ZMIANA' 
+    contact_email: 'ZMIANA@test.pl' 
+    contact_phone: "+48133252633" 
+    description: 'ZMIANA' 
+    skills='[\"SKILL1\", \"SKILL2\"]' czyli JSON.stringify([\"SKILL1\", \"SKILL2\"]))
+}
+response:
+-updated object, output is the same as get, so it returns whole object with dependencies(skiils)
 
 ==>DELTE(delete selected entity)
 header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"

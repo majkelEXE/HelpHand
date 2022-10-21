@@ -107,8 +107,18 @@ class FundraiserDetail(APIView):
         return Response(serializer.data) 
 
     def put(self, request, pk, format=None):
-        #it will be use for updateding
-        pass
+        user_id = self.auth_user(request)
+        fundraiser = self.get_object(pk)
+        if user_id == None:
+            return Response(data={'error': 'No Token. Authorization Denied'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        elif fundraiser.created_by != user_id:
+            return Response(data={'error':'Access denied. Cannot delete other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        serializer = FundraiserSerializer(fundraiser, data=request.data, context={'location': request.data["location"], 'volunteers': request.data["volunteers"], "user_id": request.user.id})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
         user_id = self.auth_user(request)
@@ -131,7 +141,7 @@ class VolunteerAdvertView(APIView):
         if not token:
             return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        volunteer_advert_serializer = VolunteerAdvertSerializer(data=request.data,context={'skills_to_add': request.data["skills"], "user_id": request.user.id})
+        volunteer_advert_serializer = VolunteerAdvertSerializer(data=request.data,context={'skills_to_add': request.data["skills"]})
 
         if volunteer_advert_serializer.is_valid():
             volunteer = volunteer_advert_serializer.save()
@@ -166,8 +176,18 @@ class VolunteerAdvertDetail(APIView):
         return Response(serializer.data) 
 
     def put(self, request, pk, format=None):
-        #it will be use for updateding
-        pass
+        user_id = self.auth_user(request)
+        volunteer = self.get_object(pk)
+        if user_id == None:
+            return Response(data={'error': 'No Token. Authorization Denied'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        elif volunteer.created_by != user_id:
+            return Response(data={'error':'Access denied. Cannot delete other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        serializer = VolunteerAdvertSerializer(volunteer, data=request.data,context={'skills_to_add': request.data["skills"]})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
         user_id = self.auth_user(request)
