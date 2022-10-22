@@ -105,7 +105,7 @@ const AddFundraise = () => {
     try {
       if (editFundraise) {
         await axios.put(
-          "/api/fundraiser",
+          `/api/fundraiser/${editFundraise.id}`,
           {
             image: image.file,
             name: name,
