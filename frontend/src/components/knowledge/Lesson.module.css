@@ -7,6 +7,7 @@
 }
 
 .classContainer > h1 {
+  font-size: 30px;
   color: var(--textColor);
   width: 75%;
   font-weight: normal;

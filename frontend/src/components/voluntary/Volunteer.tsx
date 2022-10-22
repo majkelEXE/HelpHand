@@ -31,6 +31,7 @@ const Volunteer = () => {
       setApplyData({
         volunteer_role: volunteer.role,
         addresser_email: volunteer.contact_email,
+        addresser_name: volunteer.role,
         email_content: "",
       });
       setModalComponent("apply");

@@ -84,7 +84,7 @@ const AddVolunteer = () => {
   const addVolunteerHandler = async () => {
     try {
       if (editVolunteer) {
-        await axios.put(
+        let res = await axios.put(
           `/api/volunteer/${editVolunteer.id}`,
           {
             contact_email: email,
@@ -102,6 +102,7 @@ const AddVolunteer = () => {
             },
           }
         );
+        console.log(res);
       } else {
         await axios.post(
           "/api/volunteer",

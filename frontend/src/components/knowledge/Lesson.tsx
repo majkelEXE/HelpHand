@@ -4,7 +4,7 @@ import { useMediaQuery } from 'react-responsive';
 import css from './Lesson.module.css';
 
 const Lesson: FC<{ goToQuiz: () => void }> = ({ goToQuiz }) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [stage, setStage] = useState(0);
 
   const render = () => {

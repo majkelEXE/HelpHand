@@ -21,7 +21,17 @@ const ResetPassword = () => {
 
         navigate("/");
       } catch (e) {
-        setError("Coś poszło nie tak!");
+        if (axios.isAxiosError(e)) {
+          setError(
+            Object.values<string>(e.response?.data).reduce(
+              (acc: string, m: string) => acc + `${m}\n`,
+              ""
+            )
+          );
+          return;
+        } else {
+          setError("Coś poszło nie tak");
+        }
         return;
       }
 
