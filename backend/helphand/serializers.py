@@ -8,15 +8,9 @@ from rest_framework.authtoken.models import Token
 from helphand.models import User, Fundraiser, VolunteerAdvert, Skill, Location
 import json
 import os
-import time
-
 
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
-
-
-# from .forms import UploadedImageForm
-
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,10 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         errors = dict() 
         try:
-            # validate the password and catch the exception
-            validators.validate_password(password=password, user=user)
-        
-        # the exception raised here is different than serializers.ValidationError
+            validators.validate_password(password=password, user=user)        
         except exceptions.ValidationError as e:
             errors['password'] = list(e.messages)
         
@@ -61,7 +52,6 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_id = self.context.get("user_id")
-        print(user_id)
         skills_data = json.loads(self.context.get("skills_to_add"))
         volunteer_advert = VolunteerAdvert.objects.create(**validated_data, created_by=user_id)
         for skill in skills_data:
@@ -71,7 +61,6 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
         return volunteer_advert
 
     def update(self, instance, validated_data):
-        print("czy to dziala")
         if "image" in validated_data.keys():
             image = validated_data.pop('image')
             image_path = instance.image.path
@@ -83,13 +72,6 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
 
         skills_data = json.loads(self.context.get("skills_to_add"))
         VolunteerAdvert.objects.filter(id=instance.id).update(**validated_data)
-
-        # image_data = instance.image.name.split("/")
-        # fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / volunteer_photos
-        # fs.save(image_data[1], image)
-
-        # while not os.path.exists(image_path):
-        #     time.sleep(1)
 
         instance.skills.all().delete()
         for skill in skills_data:
@@ -126,14 +108,11 @@ class FundraiserSerializer(serializers.ModelSerializer):
         return fundraiser
 
     def update(self, instance, validated_data):
-        print(validated_data)
         if "image" in validated_data.keys():
             image = validated_data.pop('image')
             image_path = str(instance.image.path)
             if os.path.exists(image_path):
                 os.remove(image_path)
-
-            print("wchodzi")
 
             instance.image = image
             instance.save()
@@ -145,15 +124,6 @@ class FundraiserSerializer(serializers.ModelSerializer):
 
         Location.objects.filter(id=location_obj.id).update(**location)
         Fundraiser.objects.filter(id=instance.id).update(**validated_data)
-
-
-        # image_data = instance.image.name.split("/")
-        # fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / fundraiser_photos
-        # fs.save(image_data[1], image)
-
-        # while not os.path.exists(image_path):
-        #     time.sleep(1)
-        
 
         for volunteer in instance.volunteers.all():
             if volunteer.id not in volunteers:

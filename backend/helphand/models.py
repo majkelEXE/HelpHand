@@ -28,9 +28,7 @@ class UserManager(BaseUserManager):
             phone_number=phone_number
         )
         user.set_password(password)
-        print("problem jest tu1")
         user.save(using=self._db)
-        print("problem jest tu2")
         Token.objects.create(user=user)
 
         return user

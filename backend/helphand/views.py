@@ -115,9 +115,7 @@ class FundraiserDetail(APIView):
             return Response(data={'error':'Access denied. Cannot update other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         serializer = FundraiserSerializer(fundraiser, data=request.data, context={'location': request.data["location"], 'volunteers': request.data["volunteers"]})
-        print(request.data)
         if serializer.is_valid():
-            print("coo")
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -180,14 +178,12 @@ class VolunteerAdvertDetail(APIView):
     def put(self, request, pk, format=None):
         user_id = self.auth_user(request)
         volunteer = self.get_object(pk)
-        print(request.FILES)
         if user_id == None:
             return Response(data={'error': 'No Token. Authorization Denied'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         elif volunteer.created_by != user_id:
             return Response(data={'error':'Access denied. Cannot update other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         serializer = VolunteerAdvertSerializer(volunteer, data=request.data,context={'skills_to_add': request.data["skills"]})
-        print(request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -214,7 +210,6 @@ class UserEntitiesViewSet(viewsets.ModelViewSet):
         token = request.headers.get("Authorization")
         if not token:
             return Response(data={'error':'No Token. Authorization Denied'}, status=status.HTTP_401_UNAUTHORIZED)
-        # user = User.objects.get(id=request.user.id)
         fundraisers = Fundraiser.objects.filter(created_by=request.user.id)
         return Response(FundraiserSerializer(fundraisers, many=True).data, status=status.HTTP_200_OK)
 
@@ -240,9 +235,6 @@ class ReportVolunteer(APIView):
         addresser_name = request.data.get("addresser_name")#person who created the volunteer advert
         volunteer_role = request.data.get("volunteer_role")
         email_content = request.data.get("email_content")
-
-        print("addresser name: ")
-        print(addresser_name)
         
         context = {
             'addresser_name': addresser_name,

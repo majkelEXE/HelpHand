@@ -21,8 +21,6 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     :return:
     """
     # send an e-mail to the user
-    print("sprawdzam czy to sie w ogole triggerujev3")
-
     context = {
         'current_user': reset_password_token.user,
         'email': reset_password_token.user.email,
