@@ -234,10 +234,12 @@ class ReportVolunteer(APIView):
         
         user = User.objects.get(id=request.user.id)#person who applies for(Sender)
         addresser_email = request.data.get("addresser_email")#person who created the volunteer advert
+        addresser_name = request.data.get("addresser_name")#person who created the volunteer advert
         volunteer_role = request.data.get("volunteer_role")
         email_content = request.data.get("email_content")
         
         context = {
+            'addresser_name': addresser_name,
             'current_user': user,
             'volunteer_role': volunteer_role,
             'email_content': email_content
