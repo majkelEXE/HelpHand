@@ -319,6 +319,7 @@ response(user is able to log in with the new password):
 header: "Authorization:token b6e34315ff4d242d7864c3a2b19fa59d9a8ee5b0"
 request
 {
+    addresser_name="Michal"//name of the person who created the advert, to this email the message will be sent
     addresser_email="michal.dubrowski@wp.pl"//email to the person who created the advert, to this email the message will be sent
     volunteer_role="tłumacz języka migowego"//role from the advert
     email_content="..."//it is the content of the mail( Allow user to form the mail and the display using tabs and spaces)

@@ -21,7 +21,7 @@
       }
 
       h1 {
-        text-align: center;
+        text-align: center !important;
       }
 
       #content {
@@ -46,19 +46,19 @@
       }
     </style>
   </head>
-  <body>
+  <body style="background-color: #e0dcdc; font-size: 16px; padding: 3% 10%">
     <div id="content">
       <div id="header">
         <h1><span style="color: #e30613">Help</span>Hand</h1>
         <img src="cid:helphand" alt="logo image" width="80px" height="80px" />
       </div>
-      <h2>Witaj {{ current_user.first_name }}!</h2>
+      <h2>Witaj {{ addresser_name }}!</h2>
       <p>
         Pojawiło się nowe zgłoszenie dla {{ volunteer_role }}. Poniżej znajduje
         się jego treść.
       </p>
       <div id="report">
-        <p>{{ email_content }}</p>
+        <p>{{ email_content|safe|escape }}</p>
         <hr />
         <p id="addresser_contact">
           Dane kontaktowe:<br />
