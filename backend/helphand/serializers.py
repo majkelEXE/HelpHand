@@ -8,6 +8,12 @@ from rest_framework.authtoken.models import Token
 from helphand.models import User, Fundraiser, VolunteerAdvert, Skill, Location
 import json
 import os
+import time
+
+
+from django.core import exceptions
+import django.contrib.auth.password_validation as validators
+
 
 # from .forms import UploadedImageForm
 
@@ -17,6 +23,25 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ["id", "email", "first_name", "last_name", "date_of_birth", "phone_number", "password"]
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+    def validate(self, data):
+        password = data.get('password')
+
+        user = User(**data)
+
+        errors = dict() 
+        try:
+            # validate the password and catch the exception
+            validators.validate_password(password=password, user=user)
+        
+        # the exception raised here is different than serializers.ValidationError
+        except exceptions.ValidationError as e:
+            errors['password'] = list(e.messages)
+        
+        if errors:
+            raise serializers.ValidationError(errors)
+        
+        return super(UserSerializer, self).validate(data)
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -57,6 +82,9 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
         image_data = instance.image.name.split("/")
         fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / volunteer_photos
         fs.save(image_data[1], image)
+
+        while not os.path.exists(image_path):
+            time.sleep(1)
 
         instance.skills.all().delete()
         for skill in skills_data:
@@ -108,6 +136,10 @@ class FundraiserSerializer(serializers.ModelSerializer):
         image_data = instance.image.name.split("/")
         fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / fundraiser_photos
         fs.save(image_data[1], image)
+
+        while not os.path.exists(image_path):
+            time.sleep(1)
+        
 
         for volunteer in instance.volunteers.all():
             if volunteer.id not in volunteers:

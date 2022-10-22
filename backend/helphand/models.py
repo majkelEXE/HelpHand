@@ -6,11 +6,23 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
 from phonenumber_field.modelfields import PhoneNumberField
 from rest_framework.authtoken.models import Token
 
+
 # Create your models here.
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email, first_name, last_name, date_of_birth, phone_number, password=None):
+    def create_user(self, email, first_name, last_name, date_of_birth, phone_number, password):
+
+        # errors = dict()
+        # if password:
+        #     try:
+        #         validators.validate_password(password=password, user=User)
+        #     except exceptions.ValidationError as e:
+        #         errors['password'] = list(e.messages)
+
+        # if errors:
+        #     raise ValueError("passsword")
+
         if not email:
             raise ValueError('Users must have an email address')
 
