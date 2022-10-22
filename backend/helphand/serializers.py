@@ -71,20 +71,25 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
         return volunteer_advert
 
     def update(self, instance, validated_data):
+        print("czy to dziala")
+        if "image" in validated_data.keys():
+            image = validated_data.pop('image')
+            image_path = instance.image.path
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+            instance.image = image
+            instance.save()
+
         skills_data = json.loads(self.context.get("skills_to_add"))
-        image = validated_data.pop('image')
         VolunteerAdvert.objects.filter(id=instance.id).update(**validated_data)
 
-        image_path = instance.image.path
-        if os.path.exists(image_path):
-            os.remove(image_path)
+        # image_data = instance.image.name.split("/")
+        # fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / volunteer_photos
+        # fs.save(image_data[1], image)
 
-        image_data = instance.image.name.split("/")
-        fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / volunteer_photos
-        fs.save(image_data[1], image)
-
-        while not os.path.exists(image_path):
-            time.sleep(1)
+        # while not os.path.exists(image_path):
+        #     time.sleep(1)
 
         instance.skills.all().delete()
         for skill in skills_data:
@@ -121,7 +126,19 @@ class FundraiserSerializer(serializers.ModelSerializer):
         return fundraiser
 
     def update(self, instance, validated_data):
-        image = validated_data.pop('image')
+        print(validated_data)
+        if "image" in validated_data.keys():
+            image = validated_data.pop('image')
+            image_path = str(instance.image.path)
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+            print("wchodzi")
+
+            instance.image = image
+            instance.save()
+
+
         location = json.loads(self.context.get("location"))
         volunteers = json.loads(self.context.get("volunteers"))
         location_obj = instance.location
@@ -129,16 +146,13 @@ class FundraiserSerializer(serializers.ModelSerializer):
         Location.objects.filter(id=location_obj.id).update(**location)
         Fundraiser.objects.filter(id=instance.id).update(**validated_data)
 
-        image_path = str(instance.image.path)
-        if os.path.exists(image_path):
-            os.remove(image_path)
 
-        image_data = instance.image.name.split("/")
-        fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / fundraiser_photos
-        fs.save(image_data[1], image)
+        # image_data = instance.image.name.split("/")
+        # fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / fundraiser_photos
+        # fs.save(image_data[1], image)
 
-        while not os.path.exists(image_path):
-            time.sleep(1)
+        # while not os.path.exists(image_path):
+        #     time.sleep(1)
         
 
         for volunteer in instance.volunteers.all():

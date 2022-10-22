@@ -115,7 +115,9 @@ class FundraiserDetail(APIView):
             return Response(data={'error':'Access denied. Cannot update other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         serializer = FundraiserSerializer(fundraiser, data=request.data, context={'location': request.data["location"], 'volunteers': request.data["volunteers"]})
+        print(request.data)
         if serializer.is_valid():
+            print("coo")
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -185,6 +187,7 @@ class VolunteerAdvertDetail(APIView):
             return Response(data={'error':'Access denied. Cannot update other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         serializer = VolunteerAdvertSerializer(volunteer, data=request.data,context={'skills_to_add': request.data["skills"]})
+        print(request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -237,6 +240,9 @@ class ReportVolunteer(APIView):
         addresser_name = request.data.get("addresser_name")#person who created the volunteer advert
         volunteer_role = request.data.get("volunteer_role")
         email_content = request.data.get("email_content")
+
+        print("addresser name: ")
+        print(addresser_name)
         
         context = {
             'addresser_name': addresser_name,

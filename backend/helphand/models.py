@@ -1,6 +1,7 @@
 from email.policy import default
 from enum import unique
 from pyexpat import model
+from tokenize import blank_re
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
 from phonenumber_field.modelfields import PhoneNumberField
@@ -12,23 +13,11 @@ class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def create_user(self, email, first_name, last_name, date_of_birth, phone_number, password):
-
-        # errors = dict()
-        # if password:
-        #     try:
-        #         validators.validate_password(password=password, user=User)
-        #     except exceptions.ValidationError as e:
-        #         errors['password'] = list(e.messages)
-
-        # if errors:
-        #     raise ValueError("passsword")
-
         if not email:
             raise ValueError('Users must have an email address')
 
         if not first_name:
             raise ValueError('Users must have names')
-
 
         email = self.normalize_email(email)
         user = self.model(
@@ -49,9 +38,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=30)
-    date_of_birth = models.DateField()
+    first_name = models.CharField(max_length=20, null=False, blank=False)
+    last_name = models.CharField(max_length=30, null=False, blank=False)
+    date_of_birth = models.DateField(null=False, blank=False)
     phone_number = PhoneNumberField(null=False, blank=False, unique=True, region="PL")
 
     USERNAME_FIELD = 'email'
@@ -63,18 +52,18 @@ class User(AbstractBaseUser):
 
 class Fundraiser(models.Model):
     created_by = models.IntegerField(null=False, blank=False, default=-1)
-    name = models.CharField(max_length = 50)
-    description = models.CharField(max_length = 250)
-    date = models.DateTimeField()#FORMAT: 2006-10-25 14:30:59
-    content = models.TextField()
+    name = models.CharField(max_length = 50, null=False, blank=False)
+    description = models.CharField(max_length = 250, null=False, blank=False)
+    date = models.DateTimeField(null=False, blank=False)#FORMAT: 2006-10-25 14:30:59
+    content = models.TextField(null=False, blank=False)
     image = models.ImageField(upload_to="fundraiser_photos", blank=True)
     contact_email = models.EmailField(null=False,blank=False)   
-    contact_phone = PhoneNumberField(null=True, blank=True, unique=False, region="PL")
+    contact_phone = PhoneNumberField(null=False, blank=False, unique=False, region="PL")
 
 class Location(models.Model):
-    name = models.CharField(max_length = 120)
-    latitude = models.TextField()
-    longtitude = models.TextField()
+    name = models.CharField(max_length = 120, null=False, blank=False)
+    latitude = models.TextField(null=False, blank=False)
+    longtitude = models.TextField(null=False, blank=False)
     fundraiser = models.OneToOneField(Fundraiser, on_delete=models.CASCADE)
 
 class Skill(models.Model):
@@ -86,9 +75,9 @@ class Skill(models.Model):
 class VolunteerAdvert(models.Model):
     created_by = models.IntegerField(null=False, blank=False, default=-1)
     fundraiser = models.ForeignKey(Fundraiser, on_delete=models.CASCADE, related_name='volunteers', blank=True, null=True)
-    role = models.CharField(max_length = 80)
-    description = models.CharField(max_length = 250)
-    content = models.TextField()
+    role = models.CharField(max_length = 80, null=False, blank=False)
+    description = models.CharField(max_length = 250, null=False, blank=False)
+    content = models.TextField(null=False, blank=False)
     image = models.ImageField(upload_to="volunteer_photos", blank=True)
     contact_email = models.EmailField(null=False,blank=False)   
     contact_phone = PhoneNumberField(null=False, blank=False, unique=False, region="PL")
