@@ -30,7 +30,9 @@ SECRET_KEY = 'django-insecure-gt)()2mdy_yu8q*mds9+o3jx1jg#2k*%je5tiwbpgjkrtr5l7z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+
+]
 
 
 # Application definition
@@ -158,3 +160,5 @@ EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD=False
