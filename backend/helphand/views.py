@@ -112,7 +112,7 @@ class FundraiserDetail(APIView):
         if user_id == None:
             return Response(data={'error': 'No Token. Authorization Denied'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         elif fundraiser.created_by != user_id:
-            return Response(data={'error':'Access denied. Cannot delete other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            return Response(data={'error':'Access denied. Cannot update other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         serializer = FundraiserSerializer(fundraiser, data=request.data, context={'location': request.data["location"], 'volunteers': request.data["volunteers"]})
         if serializer.is_valid():
@@ -178,10 +178,11 @@ class VolunteerAdvertDetail(APIView):
     def put(self, request, pk, format=None):
         user_id = self.auth_user(request)
         volunteer = self.get_object(pk)
+        print(request.FILES)
         if user_id == None:
             return Response(data={'error': 'No Token. Authorization Denied'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         elif volunteer.created_by != user_id:
-            return Response(data={'error':'Access denied. Cannot delete other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            return Response(data={'error':'Access denied. Cannot update other users entities.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         serializer = VolunteerAdvertSerializer(volunteer, data=request.data,context={'skills_to_add': request.data["skills"]})
         if serializer.is_valid():

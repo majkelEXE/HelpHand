@@ -1,8 +1,15 @@
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
+from copyreg import constructor
 from pyexpat import model
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from helphand.models import User, Fundraiser, VolunteerAdvert, Skill, Location
 import json
+import os
+
+# from .forms import UploadedImageForm
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -40,13 +47,24 @@ class VolunteerAdvertSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         skills_data = json.loads(self.context.get("skills_to_add"))
+        image = validated_data.pop('image')
         VolunteerAdvert.objects.filter(id=instance.id).update(**validated_data)
+
+        image_path = instance.image.path
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
+        image_data = instance.image.name.split("/")
+        fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / volunteer_photos
+        fs.save(image_data[1], image)
 
         instance.skills.all().delete()
         for skill in skills_data:
             skill_obj, _ = Skill.objects.get_or_create(name=skill)
             instance.skills.add(skill_obj)
 
+
+        instance = VolunteerAdvert.objects.get(pk=instance.id)
         return instance
     
 class LocationSerializer(serializers.ModelSerializer):
@@ -75,12 +93,21 @@ class FundraiserSerializer(serializers.ModelSerializer):
         return fundraiser
 
     def update(self, instance, validated_data):
+        image = validated_data.pop('image')
         location = json.loads(self.context.get("location"))
         volunteers = json.loads(self.context.get("volunteers"))
         location_obj = instance.location
 
         Location.objects.filter(id=location_obj.id).update(**location)
         Fundraiser.objects.filter(id=instance.id).update(**validated_data)
+
+        image_path = str(instance.image.path)
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
+        image_data = instance.image.name.split("/")
+        fs = FileSystemStorage(location="media/" + image_data[0] + "/")#without "media/" location is set to helphand / fundraiser_photos
+        fs.save(image_data[1], image)
 
         for volunteer in instance.volunteers.all():
             if volunteer.id not in volunteers:
@@ -94,5 +121,6 @@ class FundraiserSerializer(serializers.ModelSerializer):
             volunteer_obj.fundraiser = instance
             volunteer_obj.save()
 
+        instance = Fundraiser.objects.get(pk=instance.id)
         return instance
 
