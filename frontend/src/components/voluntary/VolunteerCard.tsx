@@ -12,7 +12,7 @@ const VolunteerCard: FC<{ volunteer: volunteerModel }> = ({ volunteer }) => {
   return (
     <div
       className={css.card}
-      onClick={() => navigate(`/volunteer/${volunteer.id}`)}
+      onClick={() => navigate(`/#/volunteer/${volunteer.id}`)}
     >
       <div className={css.data}>
         <h1 className={css.role}>{volunteer.role}</h1>

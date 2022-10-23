@@ -29,7 +29,7 @@ const ManageFundraises = () => {
   const editHandler = async (e: MouseEvent<HTMLElement>, id: number) => {
     e.stopPropagation();
     setEditFundraise(fundraises.filter((f) => f.id == id)[0]);
-    navigate("/addfundraise");
+    navigate("/#/addfundraise");
   };
 
   return (
@@ -48,7 +48,7 @@ const ManageFundraises = () => {
       )}
       <RiAddCircleFill
         onClick={() => {
-          navigate("/addfundraise");
+          navigate("/#/addfundraise");
         }}
       />
     </div>

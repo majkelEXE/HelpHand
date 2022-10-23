@@ -17,7 +17,7 @@ const VolunteerThumbnail: FC<{
   return (
     <div
       className={css.thumbnailContainer}
-      onClick={() => navigate("/volunteer/" + volunteer.id)}
+      onClick={() => navigate("/#/volunteer/" + volunteer.id)}
     >
       <div className={css.thumbnailData}>
         <h1>{volunteer.role}</h1>

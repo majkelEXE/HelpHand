@@ -12,7 +12,7 @@ const FundraiseCard: FC<{ fundraise: fundraiseModel }> = ({ fundraise }) => {
   return (
     <div
       className={css.card}
-      onClick={() => navigate(`/fundraise/${fundraise.id}`)}
+      onClick={() => navigate(`/#/fundraise/${fundraise.id}`)}
     >
       <div className={css.data}>
         <h1 className={css.name}>{fundraise.name}</h1>

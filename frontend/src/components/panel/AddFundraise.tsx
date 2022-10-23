@@ -161,7 +161,7 @@ const AddFundraise = () => {
       }
 
       setSync(true);
-      navigate("/managefundraises");
+      navigate("/#/managefundraises");
     } catch (e) {
       if (axios.isAxiosError(e)) {
         console.log(e);

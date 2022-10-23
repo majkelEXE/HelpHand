@@ -1,7 +1,7 @@
 import './index.css';
 
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
 import ResetPassword from './components/account/ResetPassword';
@@ -20,7 +20,7 @@ import Volunteer from './components/voluntary/Volunteer';
 import AtomsProvider from './providers/AtomsProvider';
 import Guard from './routes/Guard';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: (
