@@ -35,7 +35,7 @@ const AtomsProvider: FC<PropsWithChildren> = ({ children }) => {
     if (sync) {
       fetchAtoms();
     }
-  }, [sync]);
+  }, [sync, token]);
 
   return !sync ? <>{children}</> : <h1>LOADING</h1>;
 };
