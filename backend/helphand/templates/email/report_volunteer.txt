@@ -1,6 +1,6 @@
 HelpHand
 
-Witaj {{ current_user.first_name }}!
+Hej!
 
 Pojawiło się nowe zgłoszenie dla {{ volunteer_role }}. Poniżej znajduje się jego treść.
 
