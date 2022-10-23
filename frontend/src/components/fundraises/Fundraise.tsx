@@ -30,11 +30,7 @@ const Fundraise = () => {
             <h2>Jakich woluntariuszy potrzebujemy?</h2>
           )}
           {fundraise.volunteers.map((v) => (
-            <a
-              key={v.id}
-              href={`/#/volunteer/${v.id}`}
-              className="primaryButton"
-            >
+            <a key={v.id} href={`/volunteer/${v.id}`} className="primaryButton">
               {v.role}
             </a>
           ))}

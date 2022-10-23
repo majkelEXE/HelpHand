@@ -11,7 +11,7 @@ const Panel = () => {
     <div className={isMobile ? css.mobilePanelContainer : css.panelContainer}>
       <div
         onClick={() => {
-          navigate("/#/managevolunteers");
+          navigate("/managevolunteers");
         }}
       >
         <h1>Wolontariat</h1>
@@ -19,7 +19,7 @@ const Panel = () => {
       </div>
       <div
         onClick={() => {
-          navigate("/#/managefundraises");
+          navigate("/managefundraises");
         }}
       >
         <h1>Zbiórki</h1>

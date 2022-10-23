@@ -36,7 +36,7 @@ const FundraisesMap = () => {
             latitude={f.location.latitude}
             longitude={f.location.longtitude}
             color={"var(--mainColor)"}
-            onClick={() => navigate(`/#/fundraise/${f.id}`)}
+            onClick={() => navigate(`/fundraise/${f.id}`)}
           />
         ))}
       </Map>

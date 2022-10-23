@@ -29,7 +29,7 @@ const ManageVolunteers = () => {
   const editHandler = async (e: MouseEvent<HTMLElement>, id: number) => {
     e.stopPropagation();
     setEditVolunteer(volunteers.filter((v) => v.id == id)[0]);
-    navigate("/#/addvolunteer");
+    navigate("/addvolunteer");
   };
 
   return (
@@ -48,7 +48,7 @@ const ManageVolunteers = () => {
       )}
       <RiAddCircleFill
         onClick={() => {
-          navigate("/#/addvolunteer");
+          navigate("/addvolunteer");
         }}
       />
     </div>

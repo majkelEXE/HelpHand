@@ -137,7 +137,7 @@ const AddVolunteer = () => {
       }
 
       setSync(true);
-      navigate("/#/managevolunteers");
+      navigate("/managevolunteers");
     } catch (e) {
       if (axios.isAxiosError(e)) {
         console.log(e);
