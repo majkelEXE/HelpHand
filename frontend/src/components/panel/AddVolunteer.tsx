@@ -82,6 +82,20 @@ const AddVolunteer = () => {
   };
 
   const addVolunteerHandler = async () => {
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !content ||
+      !description ||
+      (!editVolunteer && !image.file)
+    ) {
+      setErrorSummary(["Uzupełnij wszystkie pola!"]);
+      setModalComponent("errorSummary");
+      setShowModal(true);
+      return;
+    }
+
     try {
       if (editVolunteer) {
         let res = await axios.put(

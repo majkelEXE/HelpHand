@@ -1,7 +1,7 @@
-import axios from "axios";
-import { SetterOrUpdater } from "recoil";
+import axios from 'axios';
+import { SetterOrUpdater } from 'recoil';
 
-import fundraiseModel from "../models/Fundraise";
+import fundraiseModel from '../models/Fundraise';
 
 const fetchUserFundraises = async (
   setUserFundraises: SetterOrUpdater<fundraiseModel[]>,
@@ -12,8 +12,6 @@ const fetchUserFundraises = async (
       headers: { Authorization: `token ${token}` },
     })
   ).data;
-
-  console.log(fundraises);
 
   setUserFundraises(fundraises);
 };

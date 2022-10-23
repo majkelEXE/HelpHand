@@ -6,6 +6,14 @@
   align-items: center;
   background-color: var(--darkBackgroundColor);
   border-radius: 10px;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+.loginContainer > h1,
+.error,
+.reset {
+  text-align: center;
 }
 
 .loginContainer > div {

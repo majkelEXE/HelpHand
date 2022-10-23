@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { RiRefreshLine } from 'react-icons/ri';
+import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -16,8 +15,6 @@ const Volunteer = () => {
   const { id } = useParams();
   const volunteers = useRecoilValue(volunteersState);
   const volunteer = volunteers.filter((v) => v.id == parseInt(id ?? ""))[0];
-  const [hasApplied, setHasApplies] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const setShowModal = useSetRecoilState(showModalState);
   const setModalComponent = useSetRecoilState(modalComponentState);
   const setApplyData = useSetRecoilState(applyDataState);
@@ -26,12 +23,18 @@ const Volunteer = () => {
 
   const isMobile = useMediaQuery({ query: "(max-width: 1000px)" });
 
-  const applyHandler = () => {
+  const applyHandler = async () => {
     if (token) {
+      let name = (
+        await axios.get("/api/auth", {
+          headers: { Authorization: `token ${token}` },
+        })
+      ).data.first_name;
+
       setApplyData({
         volunteer_role: volunteer.role,
         addresser_email: volunteer.contact_email,
-        addresser_name: volunteer.role,
+        addresser_name: name,
         email_content: "",
       });
       setModalComponent("apply");
@@ -41,14 +44,6 @@ const Volunteer = () => {
       setModalComponent("errorSummary");
       setShowModal(true);
     }
-
-    // if (!hasApplied) {
-    //   setIsLoading(true);
-    //   loadingTimeout = setTimeout(() => {
-    //     setIsLoading(false);
-    //     setHasApplies(true);
-    //   }, 3000);
-    // }
   };
 
   return (
@@ -68,15 +63,9 @@ const Volunteer = () => {
           ))}
         </div>
         <div className={css.aplication}>
-          <div
-            className={`bigPrimaryButton ${hasApplied ? css.slideOut : ""}`}
-            onClick={applyHandler}
-          >
-            {hasApplied
-              ? "Gratulacje! Twoja aplikacja została wysłana!"
-              : "Aplikuj"}
+          <div className={`bigPrimaryButton`} onClick={applyHandler}>
+            Aplikuj
           </div>
-          {isLoading && <RiRefreshLine className={css.spin} />}
         </div>
         <h2>Kontakt</h2>
         <a href={`mailto:${volunteer.contact_email}`}>

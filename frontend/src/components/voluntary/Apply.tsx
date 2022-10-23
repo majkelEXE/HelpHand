@@ -26,7 +26,10 @@ const Apply = () => {
   const textAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
     setApplyData((prevState) => {
-      return { ...prevState!, email_content: e.target.value };
+      return {
+        ...prevState!,
+        email_content: e.target.value.split("\n").join("<br/>"),
+      };
     });
   };
 

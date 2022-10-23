@@ -59,12 +59,17 @@ const Login = () => {
 
   const resetHandler = async () => {
     if (email) {
-      let res = await axios.post("api/password_reset/", { email: email });
+      try {
+        await axios.post("api/password_reset/", { email: email });
 
-      if (res.data.status == "OK") {
         setError("Sprawdź maila!");
-      } else {
-        setError("Coś poszło nie tak");
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          let values = Object.values(e.response?.data);
+          setError(values.join("\n"));
+        } else {
+          setError("Coś poszło nie tak!");
+        }
       }
     } else {
       setError("Podaj maila!");

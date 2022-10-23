@@ -14,7 +14,7 @@ import showModalState from '../../atoms/showModal';
 import syncState from '../../atoms/sync';
 import textareaState from '../../atoms/textarea';
 import tokenState from '../../atoms/token';
-import volunteersState from '../../atoms/volunteers';
+import userVolunteersState from '../../atoms/userVolunteers';
 import Location from '../../models/Location';
 import css from './AddFundraise.module.css';
 
@@ -77,7 +77,7 @@ const AddFundraise = () => {
   );
   const [zoom, setZoom] = useState(11);
 
-  const volunteers = useRecoilValue(volunteersState);
+  const userVolunteers = useRecoilValue(userVolunteersState);
   const setSync = useSetRecoilState(syncState);
   const token = useRecoilValue(tokenState);
   const setShowModal = useSetRecoilState(showModalState);
@@ -101,7 +101,22 @@ const AddFundraise = () => {
   };
 
   const addFundraiseHandler = async () => {
-    console.log(date);
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !content ||
+      !description ||
+      (!editFundraise && !image.file) ||
+      !date ||
+      !location
+    ) {
+      setErrorSummary(["Uzupełnij wszystkie pola!"]);
+      setModalComponent("errorSummary");
+      setShowModal(true);
+      return;
+    }
+
     try {
       if (editFundraise) {
         await axios.put(
@@ -150,18 +165,15 @@ const AddFundraise = () => {
       setSync(true);
       navigate("/managefundraises");
     } catch (e) {
-      // if (axios.isAxiosError(e)) {
-      //   console.log(e);
-      //   // setError(
-      //   //   Object.values<string>(e.response?.data).reduce(
-      //   //     (acc: string, m: string) => acc + `${m}\n`,
-      //   //     ""
-      //   //   )
-      //   // );
-      //   return;
-      // }
+      if (axios.isAxiosError(e)) {
+        console.log(e);
+        let keys = Object.keys(e.response?.data);
+        let values = Object.values(e.response?.data);
+        setErrorSummary(keys.map((k, i) => k + " - " + values[i]));
+      } else {
+        setErrorSummary(["Coś poszło nie tak!"]);
+      }
 
-      setErrorSummary(["Coś poszło nie tak!"]);
       setModalComponent("errorSummary");
       setShowModal(true);
       return;
@@ -331,63 +343,11 @@ const AddFundraise = () => {
                 </Marker>
               )}
             </Map>
-            {/* <div className={css.locationInput}>
-              <input
-                type="text"
-                className="textInput"
-                value={locationQuery}
-                onChange={(e) => setLocationQuery(e.target.value)}
-              />
-              <div
-                onClick={searchLocationHandler}
-                className={`primaryButton ${css.searchButton}`}
-              >
-                Search
-              </div>
-            </div> */}
-            {/* <div className={css.addresses}>
-              {addresses.map((a, i) => (
-                <div
-                  key={i}
-                  className={`${css.address} ${
-                    a.name == location?.name &&
-                    a.lat == location.lat &&
-                    a.lon == location.lon
-                      ? css.addressSelected
-                      : ""
-                  }`}
-                  onClick={() => locationSelectHandler(a)}
-                >
-                  {a.name}
-                </div>
-              ))}
-            </div>
-          </div> */}
-
-            {/* <h1>Wymagania</h1>
-          <input
-            type="text"
-            className="textInput"
-            maxLength={50}
-            value={requirement}
-            onChange={(e) => setRequirement(e.target.value)}
-          />
-          <RiAddCircleFill
-            onClick={addRequirementHandler}
-            style={{ marginBottom: "50px" }}
-          />
-          <div className={css.requirements}>
-            {requirements.map((r, i) => (
-          <div className={css.requirement}>
-            <p>{r}</p>
-            <RiDeleteBin2Fill onClick={() => deleteRequirementHandler(i)} />
-          </div>
-        ))} */}
           </div>
           <h1>Potrzebni wolontariusze</h1>
 
           <div className={css.volunteers}>
-            {volunteers.map((v, i) => (
+            {userVolunteers.map((v, i) => (
               <p
                 className={`${css.volunteer} ${
                   selectedVolunteers.includes(v.id) ? css.selectedVolunteer : ""
