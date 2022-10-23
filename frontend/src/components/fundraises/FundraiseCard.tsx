@@ -21,7 +21,14 @@ const FundraiseCard: FC<{ fundraise: fundraiseModel }> = ({ fundraise }) => {
       </div>
       {!isMobile && (
         <div className={css.imageContainer}>
-          <img src={`/api${fundraise.image}`} alt="IMAGE" />
+          <img
+            src={
+              process.env.REACT_APP_RUNNING == "DEV"
+                ? `/api${fundraise.image}`
+                : fundraise.image
+            }
+            alt="IMAGE"
+          />
         </div>
       )}
     </div>

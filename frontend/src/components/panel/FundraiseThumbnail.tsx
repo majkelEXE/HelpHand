@@ -25,7 +25,14 @@ const FundraiseThumbnail: FC<{
       </div>
 
       {!isMobile && (
-        <img src={`/api${fundraise.image}`} className={css.image} />
+        <img
+          src={
+            process.env.REACT_APP_RUNNING == "DEV"
+              ? `/api${fundraise.image}`
+              : fundraise.image
+          }
+          className={css.image}
+        />
       )}
       <div className={css.thumbnailAction}>
         <div onClick={(e) => editHandler(e, fundraise.id)}>

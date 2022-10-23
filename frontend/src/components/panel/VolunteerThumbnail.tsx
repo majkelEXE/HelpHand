@@ -25,7 +25,14 @@ const VolunteerThumbnail: FC<{
       </div>
 
       {!isMobile && (
-        <img src={`/api${volunteer.image}`} className={css.image} />
+        <img
+          src={
+            process.env.REACT_APP_RUNNING == "DEV"
+              ? `/api${volunteer.image}`
+              : volunteer.image
+          }
+          className={css.image}
+        />
       )}
 
       <div className={css.thumbnailAction}>

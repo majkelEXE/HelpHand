@@ -27,7 +27,14 @@ const VolunteerCard: FC<{ volunteer: volunteerModel }> = ({ volunteer }) => {
       </div>
       {!isMobile && (
         <div className={css.imageContainer}>
-          <img src={`/api${volunteer.image}`} alt="IMAGE" />
+          <img
+            src={
+              process.env.REACT_APP_RUNNING == "DEV"
+                ? `/api${volunteer.image}`
+                : volunteer.image
+            }
+            alt="IMAGE"
+          />
         </div>
       )}
     </div>

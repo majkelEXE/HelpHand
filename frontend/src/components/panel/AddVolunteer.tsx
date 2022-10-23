@@ -53,9 +53,7 @@ const AddVolunteer = () => {
     name: string;
     file: File | null;
   }>({
-    src: editVolunteer
-      ? "api/" + editVolunteer.image
-      : "/images/background.jpg",
+    src: editVolunteer ? editVolunteer.image : "/images/background.jpg",
     name: "Wybierz zdjęcie",
     file: null,
   });

@@ -51,9 +51,7 @@ const AddFundraise = () => {
     name: string;
     file: File | null;
   }>({
-    src: editFundraise
-      ? "api/" + editFundraise.image
-      : "/images/background.jpg",
+    src: editFundraise ? editFundraise.image : "/images/background.jpg",
     name: "Wybierz zdjęcie",
     file: null,
   });

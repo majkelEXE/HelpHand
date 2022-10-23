@@ -71,7 +71,13 @@ const Fundraise = () => {
         </div>
       </div>
       <div className={css.fundraiseImage}>
-        <img src={`/api${fundraise.image}`} />
+        <img
+          src={
+            process.env.REACT_APP_RUNNING == "DEV"
+              ? `/api${fundraise.image}`
+              : fundraise.image
+          }
+        />
       </div>
     </div>
   );
