@@ -42,10 +42,7 @@ const Fundraise = () => {
 
         <div className={css.location}>
           <h2>Kiedy i gdzie?</h2>
-          <h3>
-            {new Date(fundraise.date).toLocaleDateString()},{" "}
-            {new Date(fundraise.date).toISOString().substring(11, 19)}
-          </h3>
+          <h3>{new Date(fundraise.date).toLocaleString()}</h3>
           <h3>{fundraise.location.name}</h3>
         </div>
 
