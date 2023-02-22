@@ -8,7 +8,7 @@ HelpHand to aplikacja internetowa mająca za zadania reorganizacje zbiórek, a t
 
 
 ## Demo
-
+Currently the demo is off :((
 https://mdubrowski.usermd.net
 ## Features
 Pierwszą z nich możemy utożsamić ze Zbiórkami(zakładka „Zbiórki” na stronie). Na stronie użytkownik jest w stanie zobaczyć wszystkie istniejące zbiórki, oczywiście są to zbiórki fizyczne, więc nie ma wsród nich żadnych zbiórek gotówki online, bądź innych tego typu. Użytkownik w praktyce może zobaczyć szczegóły odnośnie danej zbiórki, takie jak opis, mapka z dokładną lokalizacją zbiórki, czy dane kontaktowe do osoby organizującej zbiórkę. Możliwe jest także zobaczenie wolontariuszy, którzy są potrzebni do danej zbiórki.
